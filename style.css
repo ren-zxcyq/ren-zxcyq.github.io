@@ -44,6 +44,13 @@ div.container > div.ahoy {
   animation: textColor 11s ease infinite;
 	border-radius:50%;
 }
+
+div.container > div.ahoy:before {
+  color: #36393a;
+  background-color: #2a2c2d;
+  animation: textColor 11s ease infinite;
+	border-radius:50%;
+}
 div.container > div.ahoy:after {
   position: absolute;
   content: "";
