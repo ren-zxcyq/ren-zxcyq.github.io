@@ -62,6 +62,7 @@ div.container > div.ahoy:after {
   background: linear-gradient(270deg, #0fffc1, #7e0fff);
   background-size: 200% 200%;
   animation: animateGlow 11s ease infinite;
+	border-radius:50%;
 }
 @keyframes animateGlow {
   0% {
