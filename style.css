@@ -1,5 +1,5 @@
 body {
-	margin: 0;
+  margin: 0;
 }
 
 * {
@@ -7,20 +7,20 @@ body {
 }
 
 .unselectable {
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-o-user-select: none;
-	user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 div.container {
   /*margin: 0 auto;*/
-	position: fixed;
-	width: 100vw;
+  position: fixed;
+  width: 100vw;
   height: 100vh;
-	z-index: -10;
+  z-index: -10;
 }
 
 div.container {
@@ -29,21 +29,22 @@ div.container {
   font-family: monospace;
   justify-content: center;
   background-color: #343638;
-	font-family: "Courier New", Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 }
 
 div.container > div.ahoy {
   position: relative;
   width: 30vw;
   height: 30vw;
-	margin-top: 0%;
+  margin-top: 0%;
   line-height: 30vw;
   text-align: center;
   color: #36393a;
   background-color: #2a2c2d;
-  animation: textColor 11s ease infinite;
-	border-radius:50%;
+  animation: textColor 44s linear infinite;
+  border-radius:50%;
 }
+
 div.container > div.ahoy:after {
   position: absolute;
   content: "";
@@ -54,85 +55,60 @@ div.container > div.ahoy:after {
   height: 100%;
   width: 100%;
   margin: 0 auto;
-  transform: scale(0.95);
+  transform: scale(0.84);
   -webkit-filter: blur(5vw);
   -moz-filter: blur(5vw);
   -ms-filter: blur(5vw);
   filter: blur(5vw);
-  background: linear-gradient(270deg, #0fffc1, #7e0fff);
-
-	/*background-color: green;*/
-
-	/*
-	background: radial-gradient(ellipse at top, #0fffc1, transparent),
-            radial-gradient(ellipse at bottom, #7e0fff, transparent);
-	*/
-
-  /*background-size: 200% 200%;*/
-  animation: animateGlow 11s ease alternate infinite;
-	border-radius:50%;
-
+  background: linear-gradient(330deg, #7e0fff, #0fffc1);
+  animation: animateGlow 44s linear infinite;
+  border-radius:50%;
 }
+
 @keyframes animateGlow {
   0% {
-    /*background-position: 0% 50%;*/
-		/*background-color: green;*/
-		rotate: 0deg;
+    rotate: 0deg;
   }
   50% {
-    /*background-position: 100% 50%;*/
-
-		/*background-color: yellow;*/
-
-		rotate: 180deg;
-
-  	/*background: linear-gradient(270deg, #0fffc1, #7e0fff);*/
+    rotate: 180deg;
   }
   100% {
-    /*background-position: 0% 50%;*/
-		/*background-color: orange;*/
-		rotate: 360deg;
+    rotate: 360deg;
   }
 }
+
 @keyframes textColor {
   0% {
     color: #7e0fff;
-		/*color: #2300ea;*/
   }
   50% {
     color: #0fffc1;
-		/*color: #ea00c7;*/
-
   }
   100% {
     color: #7e0fff;
-		/*color: #9800ea;*/
   }
 }
 
 div.container > nav.ahoyy {
-  /*line-height: 22vw;*/
-	position: fixed;
+  position: fixed;
   width: 42%;
-	height: 4%;
-	bottom: 5%;
-	margin-width: auto;
-	z-index:1000;
-	/*background-color: green;*/
-	text-align: center;
+  height: 4%;
+  bottom: 5%;
+  margin-width: auto;
+  z-index:1000;
+  text-align: center;
 }
 
 div.container > nav.ahoyy > li {
-	display: inline-block;
-	/*background-color: purple;*/
-	margin: 0.2em;
-	width: 4em;
+  display: inline-block;
+  margin: 0.2em;
+  width: 4em;
 }
 
 div.container > nav.ahoyy > li > a {
-	color: gray;
-	text-decoration: none;
-	animation: textColor 11s ease infinite;
+  color: gray;
+  text-decoration: none;
+  animation: textColor 44s linear infinite;
 }
 
 div.container > blog {
@@ -140,13 +116,13 @@ div.container > blog {
 }
 
 .blog > nav {
-	background-color: green;
-	width: 84vw;
-	height: 7vh;
+  background-color: green;
+  width: 84vw;
+  height: 7vh;
 }
 
 .blog > nav > li {
-	background-color: purple;
-	width: 4em;
-	margin: 0.2em;
+  background-color: purple;
+  width: 4em;
+  margin: 0.2em;
 }
