@@ -44,13 +44,6 @@ div.container > div.ahoy {
   animation: textColor 11s ease infinite;
 	border-radius:50%;
 }
-
-div.container > div.ahoy:before {
-  color: #36393a;
-  background-color: #2a2c2d;
-  animation: textColor 11s ease infinite;
-	border-radius:50%;
-}
 div.container > div.ahoy:after {
   position: absolute;
   content: "";
@@ -61,25 +54,44 @@ div.container > div.ahoy:after {
   height: 100%;
   width: 100%;
   margin: 0 auto;
-  transform: scale(0.75);
+  transform: scale(0.95);
   -webkit-filter: blur(5vw);
   -moz-filter: blur(5vw);
   -ms-filter: blur(5vw);
   filter: blur(5vw);
   background: linear-gradient(270deg, #0fffc1, #7e0fff);
-  background-size: 200% 200%;
-  animation: animateGlow 11s ease infinite;
+
+	/*background-color: green;*/
+
+	/*
+	background: radial-gradient(ellipse at top, #0fffc1, transparent),
+            radial-gradient(ellipse at bottom, #7e0fff, transparent);
+	*/
+
+  /*background-size: 200% 200%;*/
+  animation: animateGlow 11s ease alternate infinite;
 	border-radius:50%;
+
 }
 @keyframes animateGlow {
   0% {
-    background-position: 0% 50%;
+    /*background-position: 0% 50%;*/
+		/*background-color: green;*/
+		rotate: 0deg;
   }
   50% {
-    background-position: 100% 50%;
+    /*background-position: 100% 50%;*/
+
+		/*background-color: yellow;*/
+
+		rotate: 180deg;
+
+  	/*background: linear-gradient(270deg, #0fffc1, #7e0fff);*/
   }
   100% {
-    background-position: 0% 50%;
+    /*background-position: 0% 50%;*/
+		/*background-color: orange;*/
+		rotate: 360deg;
   }
 }
 @keyframes textColor {
