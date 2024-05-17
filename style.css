@@ -61,11 +61,11 @@ div.container > div.ahoy:after {
   -ms-filter: blur(5vw);
   filter: blur(5vw);
   background: linear-gradient(330deg, #7e0fff, #0fffc1);
-  animation: animateGlow 44s linear infinite;
+  animation: animateSun 44s linear infinite;
   border-radius:50%;
 }
 
-@keyframes animateGlow {
+@keyframes animateSun {
   0% {
     rotate: 0deg;
   }
