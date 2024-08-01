@@ -21,15 +21,14 @@ div.container {
   width: 100vw;
   height: 100vh;
   z-index: -10;
-}
 
-div.container {
-  display: flex;
   align-items: center;
   font-family: monospace;
   justify-content: center;
   background-color: #343638;
   font-family: "Courier New", Courier, monospace;
+
+  display: flex;
 }
 
 div.container > div.ahoy {
@@ -111,18 +110,102 @@ div.container > nav.ahoyy > li > a {
   animation: textColor 44s linear infinite;
 }
 
-div.container > blog {
 
+/*blog*/
+
+div.scrollable {
+	overflow-y: auto;
 }
 
-.blog > nav {
+div.containerBlog > nav.blogNav {
   background-color: green;
-  width: 84vw;
-  height: 7vh;
+  /*width: 84vw;*/
+	width: 90%;
+	left: 5%;
+  /*height: 8vh;*/
+	position: inherit;
+	top: 0;
+	z-index: 1;
 }
 
-.blog > nav > li {
-  background-color: purple;
-  width: 4em;
-  margin: 0.2em;
+
+div.containerBlog > nav.blogNav > div.blogNavMain {
+	left: 0;
+	display: inline-block;
+	background-color: blue;
+	margin: 0.2em;
+	/*width: 6em;*/
+	width: 12.79%;
 }
+div.containerBlog > nav.blogNav > div.blogNavMain > li {
+	/*display: inline-block;*/
+	/*width: 8em;*/
+	background-color: red;
+}
+
+
+div.containerBlog > nav.blogNav > div > li {
+	display: inline-block;
+	margin: 0.2em;
+}
+
+
+
+
+div.containerBlog > nav.blogNav > div.blogNavAside {
+	/*right: 0;*/
+	display: inline-block;
+	background-color: lightblue;
+	margin: 0.2em;
+	width: 70%;
+	float: right;
+}
+div.containerBlog > nav.blogNav > div.blogNavAside > li {
+	float: right;
+	background-color: red;
+}
+
+div.containerBlog > div.blog {
+	background-color: purple;
+	width: 100%;
+	/*height: 100%;*/
+	/*height: inherit;*/
+	height: 90%;
+	z-index: 2;
+	padding: 0.2em;
+	/*margin-top: 3.14%;*/
+	/*margin-bottom: 0;*/
+	padding: 0 4% 0 4%;
+}
+
+div.containerBlog > div.blog-invisible-top {
+	z-index: 3;
+	margin-top: 0;
+	margin-bottom: 5%;
+	width: 100px;
+	height: 100px;
+	background-color: brown;
+	/*display: block;*/
+	/*clear: both;*/
+
+}
+
+div.containerBlog {
+  /*margin: 0 auto;*/
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  /*z-index: -10;*/
+
+  align-items: center;
+  font-family: monospace;
+  justify-content: center;
+  background-color: #343638;
+  font-family: "Courier New", Courier, monospace;
+
+}
+
+div.containerBlog > div.blog > h1 {background-color: yellow}
+div.containerBlog > div.blog > h2 {background-color: yellow}
+div.containerBlog > div.blog > h3 {background-color: yellow}
+div.containerBlog > div.blog > p {background-color: orange}
