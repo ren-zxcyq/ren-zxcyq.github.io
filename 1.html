@@ -141,13 +141,12 @@
 	<li><code>Invoke()</code></li>
 	<li><code>asp**net_com**pi**ler.**e**x**e</code> - [aspnet_compiler.exe](https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/)</li>
 	<li>Calling <code>Replace("@","A")</code> against both <code>$aloooooooo</code> and <code>$geGWHZ</code>, transforms the string <code>4D5@</code> into <code>4D5A</code>, the magic number for a DOS header, indicative of a PE file.</li>
-	<li>#todo **not sure if I should write this even if it's correct** -> Calling <code>Replace("%","0")</code> against <code>$aloooooooo</code>. -> if the magic number was not there, we could perhaps see that this is a PE file based on the fact that large sections of text are separated by large sections of 0s after the transformation.</li>
 	</ul>
 
 
 	<br />
 	<br />
-	<p>One could here analyse this using automated means, like *PSDecode or X*, or debug and analyse this manually. #todo automated analysis ?</p>
+	<p>One could here analyse this using automated means, like *PSDecode or X*, or debug and analyse this manually.</p>
 
 	<p>For manual analysis, PowerShell ISE is great.</p>
 
