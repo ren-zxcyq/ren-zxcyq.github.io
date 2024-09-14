@@ -3,7 +3,6 @@ body {
 }
 
 * {
-  /*box-sizing: border-box;*/
 }
 
 .unselectable {
@@ -16,7 +15,6 @@ body {
 }
 
 div.container {
-  /*margin: 0 auto;*/
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -113,99 +111,297 @@ div.container > nav.ahoyy > li > a {
 
 /*blog*/
 
-div.scrollable {
-	overflow-y: auto;
-}
+nav.blogNav {
 
-div.containerBlog > nav.blogNav {
-  background-color: green;
-  /*width: 84vw;*/
-	width: 90%;
-	left: 5%;
-  /*height: 8vh;*/
-	position: inherit;
-	top: 0;
-	z-index: 1;
-}
-
-
-div.containerBlog > nav.blogNav > div.blogNavMain {
-	left: 0;
-	display: inline-block;
-	background-color: blue;
-	margin: 0.2em;
-	/*width: 6em;*/
-	width: 12.79%;
-}
-div.containerBlog > nav.blogNav > div.blogNavMain > li {
-	/*display: inline-block;*/
-	/*width: 8em;*/
-	background-color: red;
-}
-
-
-div.containerBlog > nav.blogNav > div > li {
-	display: inline-block;
-	margin: 0.2em;
-}
-
-
-
-
-div.containerBlog > nav.blogNav > div.blogNavAside {
-	/*right: 0;*/
-	display: inline-block;
-	background-color: lightblue;
-	margin: 0.2em;
-	width: 70%;
-	float: right;
-}
-div.containerBlog > nav.blogNav > div.blogNavAside > li {
-	float: right;
-	background-color: red;
-}
-
-div.containerBlog > div.blog {
-	background-color: purple;
-	width: 100%;
-	/*height: 100%;*/
-	/*height: inherit;*/
-	height: 90%;
-	z-index: 2;
-	padding: 0.2em;
-	/*margin-top: 3.14%;*/
-	/*margin-bottom: 0;*/
-	padding: 0 4% 0 4%;
-}
-
-div.containerBlog > div.blog-invisible-top {
-	z-index: 3;
-	margin-top: 0;
-	margin-bottom: 5%;
-	width: 100px;
-	height: 100px;
-	background-color: brown;
-	/*display: block;*/
-	/*clear: both;*/
-
-}
-
-div.containerBlog {
-  /*margin: 0 auto;*/
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  /*z-index: -10;*/
-
-  align-items: center;
-  font-family: monospace;
-  justify-content: center;
-  background-color: #343638;
   font-family: "Courier New", Courier, monospace;
 
+	min-height: 3.14em;
+	height: 6.28vh;
+
+	padding-left: 0em;
+
+	width:100%;
+	margin-bottom: 0;
+
 }
 
-div.containerBlog > div.blog > h1 {background-color: yellow}
-div.containerBlog > div.blog > h2 {background-color: yellow}
-div.containerBlog > div.blog > h3 {background-color: yellow}
-div.containerBlog > div.blog > p {background-color: orange}
+nav.blogNav > div.blogNavContainer {
+	display: flex;
+	height: inherit;
+
+	font-size: 0.9em;
+}
+
+nav.blogNav > div.blogNavContainer > ul {
+	list-style: none;
+
+	width: 96%;
+
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-left:1%;
+	margin-right:1%;
+	padding-top: 0.314em;
+	padding-bottom: 0.314em;
+	min-height: 3.14em;
+}
+
+
+nav.blogNav > div.blogNavContainer > ul > li > a {
+	position: relative;
+	/*background-color: orange;*/
+	display:block;
+	height: inherit;
+	width: inherit;
+	max-height: inherit;
+	max-width: 6.28em;
+	max-height: 2.8em;
+	/*margin-top: 10em;*/
+	border-radius: 0.157em;
+	/*line-height: 1em;*/
+	text-align: center;
+}
+
+
+main {
+	font-family: Garamond, serif;
+}
+
+main > div.blogTitle {
+	background-color: #2a2c2d;
+
+	animation: borderColor 44s linear infinite;
+
+	border-top: 1px solid #343638;
+
+	padding-top: 2em;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 4em;
+
+	position: relative;
+
+	margin-top: 0;
+}
+
+main > div.blogTitle > h1 {
+	text-align: center;
+
+	font-family: Garamond, serif;
+	color: #E1E1E1;
+}
+
+main > div.blogTitle > div.blogDescription {
+	font-size: 1em;
+	text-align: center;
+	margin-top: 2em;
+	/*color: #D3C6CA;*/
+	color: #CACACA;
+}
+
+main > div.blogTitle > div.blogDatePublished {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	color: #CACACA;
+	padding-right: 1em;
+}
+
+main > div.blogContainer {
+  margin-left: 14%;
+  margin-right: 14%;
+}
+
+main > div.blogContainer > article {
+	padding-right: 2em;
+	padding-left: 2em;
+}
+
+ul.blogLandCards {
+	background-color:
+}
+
+li.blogLandCard {
+	margin-top: 6.28vh;
+}
+
+li.blogLandCard:hover {
+	border-left: 0.4em solid #e1e1e1;
+}
+
+li.blogLandCard > a {
+	display: flex;
+	animation: backgroundColor 44s linear infinite;
+}
+
+div.blogLandCard-img {
+	display: block;
+	background-color: black;
+	background-size: cover;
+	width: 60%;
+	height: inherit;
+	flex: 0.6;
+	margin-right: 3.14vh;
+}
+
+div.blogLandCard-txt {
+	/*display: block;*/
+	background-color: #2a2c2d;
+	width: 40%;
+	height: inherit;
+	flex: 0.4;
+
+	padding-left: 3.14vh;
+  padding-right: 3.14vh;
+  padding-top: 6.28vh;
+  padding-bottom: 6.28vh;
+	position: relative;
+
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+
+
+li.blogLandCard > a {
+	text-decoration: none
+}
+
+div.blogLandCard-title > h1 {
+  font-family: Garamond, serif;
+  color: #E1E1E1;
+	margin-bottom: 6.28vh;
+}
+
+div.blogLandCard-description {
+	font-size: 1em;
+  /*color: #D3C6CA;*/
+  color: #CACACA;
+}
+
+div.blogLandCard-date {
+	position: absolute;
+  color: #CACACA;
+	bottom: 6.28vh;
+  right: 3.14vh;
+}
+
+article > .hr {
+	content: '';
+	margin-bottom: 1em;
+	width: 2.3em;
+	height: 2px;
+	display: block;
+	background-color: #e1e1e1;
+}
+
+article > img.displayFull {
+	max-width: 100%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+code {
+	font-family: "Courier New", Courier, monospace;
+}
+
+code > pre {
+	font-family: "Courier New", Courier, monospace;
+}
+
+
+div.blogWrapper {
+	background-color: #343638;
+  width: 100%;
+	color: #e1e1e1;
+}
+
+div.heightvh {
+	height: inherit;
+  min-height: 93.72vh;
+}
+
+div.heightpercent {
+  height: 100%;
+}
+
+.section-spacing-top {
+	margin-top: 9.42vh;
+}
+.section-spacing-first-top-blog {
+	padding-top: 9.42vh;
+}
+.section-spacing-first-top-blog-post {
+	padding-top: 3.14vh;
+}
+
+
+header {
+	background-color: #2a2c2d;
+}
+
+li.headerLi {
+	border-radius: 0.157em;
+	width: 6.28em;
+	height: 2.8em;
+	margin-top: 0em;
+	float: left;
+	margin-right: 0.3925em;
+}
+
+li.headerLiCore {
+	background-color: #36393a;
+}
+
+li.headerLiCore:hover {
+	background-color: #36393a;
+}
+
+li.headerLi:hover {
+	background-color: #36393a;
+}
+
+a.headerACore {
+	animation: textColor 44s linear infinite;
+}
+
+
+@keyframes backgroundColor {
+  0% {
+    /*background-color: #7e0fff;*/
+		background-color: rgba(126, 15, 255, 1);
+  }
+  50% {
+    /*background-color: #0fffc1;*/
+		background-color: rgba(15, 255, 193, 1);
+  }
+  100% {
+    /*background-color: #7e0fff;*/
+		background-color: rgba(126, 15, 255, 1);
+  }
+}
+
+
+@keyframes borderColor {
+  0% {
+		border-bottom: 1.57vh solid rgba(126, 15, 255, 1);
+  }
+  50% {
+		border-bottom: 1.57vh solid rgba(15, 255, 193, 1);
+  }
+  100% {
+		border-bottom: 1.57vh solid rgba(126, 15, 255, 1);
+  }
+}
+
+
+div.navLinkContent {
+	position: absolute;
+	margin: 0;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
