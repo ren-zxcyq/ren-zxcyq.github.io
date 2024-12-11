@@ -116,8 +116,8 @@ nav.blogNav {
 
   font-family: "Courier New", Courier, monospace;
 
-	min-height: 3.14em;
-	height: 6.28vh;
+	/*min-height: 3.14em;*/
+	/*height: 6.28vh;*/
 
 	padding-left: 0em;
 
@@ -128,7 +128,7 @@ nav.blogNav {
 
 nav.blogNav > div.blogNavContainer {
 	display: flex;
-	height: inherit;
+	/*height: inherit;*/
 
 	font-size: 0.9em;
 }
@@ -144,7 +144,7 @@ nav.blogNav > div.blogNavContainer > ul {
 	margin-right:1%;
 	padding-top: 0.314em;
 	padding-bottom: 0.314em;
-	min-height: 3.14em;
+	/*min-height: 3.14em;*/
 }
 
 
