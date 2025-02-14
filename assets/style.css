@@ -45,10 +45,13 @@ div.container {
 
 div.container > div.ahoy {
   position: relative;
-  width: 30vw;
-  height: 30vw;
+  /*width: 30vw;*/
+  width: 30vmax;
+  /*height: 30vw;*/
+  height: 30vmax;
   margin-top: 0%;
-  line-height: 30vw;
+  /*line-height: 30vw;*/
+  line-height: 30vmax;
   text-align: center;
 	/*font-size: 1.2147vw;*/
 	/*font-size: 1.7529vw;*/
