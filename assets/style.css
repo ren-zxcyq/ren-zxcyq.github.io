@@ -51,7 +51,8 @@ div.container > div.ahoy {
   line-height: 30vw;
   text-align: center;
 	/*font-size: 1.2147vw;*/
-	font-size: 1.7529vw;
+	/*font-size: 1.7529vw;*/
+	font-size: 1.7529vmax;
   color: #36393a;
   background-color: #2a2c2d;
   animation: textColor 44s linear infinite;
@@ -116,7 +117,7 @@ div.container > nav.ahoyy > li {
   display: inline-block;
   margin: 0.2em;
   width: 4em;
-	font-size: 1.7529vw;
+	font-size: 1.7529vmax;
 }
 
 div.container > nav.ahoyy > li > a {
