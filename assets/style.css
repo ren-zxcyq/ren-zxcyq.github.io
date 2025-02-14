@@ -1,3 +1,16 @@
+/*
+ *
+ * 3.14159 / 4 = 0.7853
+ * 1 - 0.7853 = 0.2147 => 1.2147
+ *
+ * 3.14159 / 3 = 1.04719
+ * 1 + 1.0471 => 2.0471vw
+ *
+ * 3.14159 / 2 = 1.570795
+ * 
+ */
+
+
 body {
   margin: 0;
 	background-color: #343638;
@@ -37,6 +50,8 @@ div.container > div.ahoy {
   margin-top: 0%;
   line-height: 30vw;
   text-align: center;
+	/*font-size: 1.2147vw;*/
+	font-size: 1.7529vw;
   color: #36393a;
   background-color: #2a2c2d;
   animation: textColor 44s linear infinite;
@@ -101,6 +116,7 @@ div.container > nav.ahoyy > li {
   display: inline-block;
   margin: 0.2em;
   width: 4em;
+	font-size: 1.7529vw;
 }
 
 div.container > nav.ahoyy > li > a {
@@ -130,7 +146,9 @@ nav.blogNav > div.blogNavContainer {
 	display: flex;
 	/*height: inherit;*/
 
-	font-size: 0.9em;
+	/*font-size: 0.9em;*/
+	/*font-size: 1.2122vw;*/
+	font-size: 1.2147vw;
 }
 
 nav.blogNav > div.blogNavContainer > ul {
@@ -190,10 +208,13 @@ main > div.blogTitle > h1 {
 
 	font-family: Garamond, serif;
 	color: #E1E1E1;
+	/*font-size: 2.4244vw;*/
+	/*font-size: 2.2471vw;*/
 }
 
 main > div.blogTitle > div.blogDescription {
-	font-size: 1em;
+	/*font-size: 1em;*/
+	font-size: 1.2147vw;
 	text-align: center;
 	margin-top: 2em;
 	/*color: #D3C6CA;*/
@@ -201,6 +222,7 @@ main > div.blogTitle > div.blogDescription {
 }
 
 main > div.blogTitle > div.blogDatePublished {
+	font-size: 1.2147vw;
 	position: absolute;
 	bottom: 0;
 	right: 0;
@@ -273,6 +295,7 @@ div.blogLandCard-title > h1 {
   font-family: Garamond, serif;
   color: #E1E1E1;
 	margin-bottom: 6.28vh;
+	/*font-size: 2.2471vw;*/
 }
 
 div.blogLandCard-description {
@@ -434,4 +457,18 @@ div.navLinkContent {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+}
+
+p {
+	font-size: 1.2147vw;
+}
+
+
+h2 {
+	font-size: 1.7529vw;
+}
+
+
+h1 {
+	font-size: 2.2471vw;
 }
