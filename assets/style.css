@@ -305,11 +305,20 @@ article > img.displayFull {
 }
 
 
-code {
-	font-family: "Courier New", Courier, monospace;
+
+blockquote {
+	max-width: 100vw;
 }
 
-code > pre {
+blockquote > pre {
+	font-family: "Courier New", Courier, monospace;
+	white-space: pre-wrap;
+	word-break: break-all;
+	/*overflow-x:scroll; // works - could do this or white-space & word-break for toggle button*/
+}
+
+blockquote > pre > code {
+/*code > pre {*/
 	font-family: "Courier New", Courier, monospace;
 }
 
@@ -396,6 +405,26 @@ a.headerACore {
   100% {
 		border-bottom: 1.57vh solid rgba(126, 15, 255, 1);
   }
+}
+
+
+@keyframes aColor {
+  0% {
+		border-bottom: 1.57vh solid rgba(126, 15, 255, 1);
+  }
+  50% {
+		border-bottom: 1.57vh solid rgba(15, 255, 193, 1);
+  }
+  100% {
+		border-bottom: 1.57vh solid rgba(126, 15, 255, 1);
+  }
+}
+
+/*a.textACore {*/
+a {
+	color: gray;
+	text-decoration: none;
+	animation: textColor 44s linear infinite;
 }
 
 

