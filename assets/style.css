@@ -471,7 +471,7 @@ div.container > nav.ahoyy > div.ahoyyy {font-size: 1.1008212vmax; display:inline
 	div.container > nav.ahoyy > div.ahoyyy {font-size: 2.2016424vmax;}
 	div.container > nav.ahoyy {margin-bottom: 8vh;}
 
-	nav.blogNav > div.blogNavContainer {font-size: 1.907079vmax;}
+	nav.blogNav > div.blogNavContainer {font-size: 2.2016424vmax;}
 	main > div.blogTitle > div.blogDescription {font-size: 1.907079vmax;}
 	main > div.blogTitle > div.blogDatePublished {font-size: 1.907079vmax;}
 	div.blogLandCard-description {font-size: 1.907079vmax;}
@@ -480,4 +480,10 @@ div.container > nav.ahoyy > div.ahoyyy {font-size: 1.1008212vmax; display:inline
 	p {font-size: 1.907079vmax;}
 	h2 {font-size: 2.752053vmax;}
 	h1 {font-size: 3.527947vmax;}
+
+	/**/
+	main > div.blogContainer {
+		margin-left: 0;
+		margin-right: 0;
+	}
 }
