@@ -37,7 +37,7 @@
 				<div class="hr section-spacing-top"></div>
 				<h2># init</h2>
 
-				<p>AsyncRAT sample: https://bazaar.abuse.ch/sample/8dba2ac1f543d24b14ca1fdf0e1e2d8333c5cc669f78afc905d512aed21e6b2f/</p>
+				<p>AsyncRAT sample: <blockquote><pre><code>https://bazaar.abuse.ch/sample/8dba2ac1f543d24b14ca1fdf0e1e2d8333c5cc669f78afc905d512aed21e6b2f/</code></pre></blockquote></p>
 
 				<p>This is an old sample, that was uploaded to bazaar and virustotal on October 2023. This is the first AsyncRAT sample I've ever analysed.</p>
 
@@ -195,12 +195,12 @@
 				<p>Next up the PowerShell, calls replace against two static bit strings before calling <code>HzGaJsAt()</code> against them.</p>
 
 				<blockquote>
-				<code style="tab-size:2em">
 				<pre>
+				<code style="tab-size:2em">
 		$SJEWS4 = (HzGaJsAt("*1***1*1*1111****11**1*1*11***11*111*1*1*111*1***11**1*1".Replace('*','0')))
 		$JDRU32 = (HzGaJsAt("0*00*00*0**0***00***0**00**0****0**0*0**0**00*0*".Replace('*','1')))
-				</pre>
 				</code>
+				</pre>
 				</blockquote>
 
 
@@ -335,7 +335,14 @@
 				<img src="/assets/imgs/1/36.png" width="25%" class="displayFull" />
 
 
-				<p>Essentially we can see that the PowerShell <code>(Assembly's).Execute().Invoke().Invoke(NULL, (aspnet_compiler.exe byteArray[]) )</code> is what will be ran.</p>
+				<p>Essentially we can see the below PowerShell is what will be run.</p>
+				<blockquote>
+				<pre>
+				<code>
+		(Assembly's).Execute().Invoke().Invoke(NULL, (aspnet_compiler.exe byteArray[]) )
+				</code>
+				</pre>
+				</blockquote>
 
 
 				<blockquote>
