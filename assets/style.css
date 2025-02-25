@@ -38,7 +38,7 @@ div.container > div.ahoy {
   height: 30vmax;
   margin-top: 0%;
   /*line-height: 30vw;*/
-  line-height: 30vmax;
+  line-height: 30vmax; /*30vmax;*/
   text-align: center;
 	/*font-size: 1.2147vw;*/
 	/*font-size: 1.7529vw;*/
@@ -463,13 +463,14 @@ div.container > nav.ahoyy > div.ahoyyy {font-size: 1.1008212vmax; display:inline
 	div.container > div.ahoy {
 		width: 50vh;
 		height: 50vh;
-		line-height: 50vmax;
-		font-size: 2.752053vmax;
+		line-height: 50vh;/*vmax;*/
+		font-size: 2.752053vh;
 		margin-bottom: 0;
 	}
 	/*div.container > nav.ahoyy > div.ahoyyy {display:none;}*/
 	div.container > nav.ahoyy > div.ahoyyy {font-size: 2.2016424vmax;}
 	div.container > nav.ahoyy {margin-bottom: 8vh;}
+	div.container > nav.ahoyy > li > a {font-size: 2.2016424vmax;}
 
 	nav.blogNav > div.blogNavContainer {font-size: 2.2016424vmax;}
 	main > div.blogTitle > div.blogDescription {font-size: 1.907079vmax;}
