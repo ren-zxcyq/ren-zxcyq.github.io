@@ -113,6 +113,16 @@ div.container > nav.ahoyy > li {
 div.container > nav.ahoyy > li > a {
   color: gray;
   text-decoration: none;
+	/*
+	 *text-size-adjust: none;
+	 *-webkit-text-size-adjust: none;
+	 */
+	/*
+	 *-webkit-text-size-adjust: 100%; 
+	 *-moz-text-size-adjust: 100%;
+	 *-ms-text-size-adjust: 100%;
+	 *text-size-adjust: 100%;
+	 */
   animation: textColor 44s linear infinite;
 }
 
@@ -459,7 +469,53 @@ h1 {font-size: 2.2471vmax;}
 
 div.container > nav.ahoyy > div.ahoyyy {font-size: 1.1008212vmax; display:inline-block;}
 
+/*
 @media (max-width: 950px) {
+	div.container > div.ahoy {
+		width: 50vh;
+		height: 50vh;
+		line-height: 50vh;
+		font-size: 2.752053vh;
+		margin-bottom: 0;
+	}
+	div.container > nav.ahoyy > div.ahoyyy {font-size: 2.2016424vmax;}
+	div.container > nav.ahoyy {margin-bottom: 8vh;}
+	div.container > nav.ahoyy > li > a {font-size: 2.2016424vmax;}
+
+	nav.blogNav > div.blogNavContainer {font-size: 2.2016424vmax;}
+	main > div.blogTitle > div.blogDescription {font-size: 1.907079vmax;}
+	main > div.blogTitle > div.blogDatePublished {font-size: 1.907079vmax;}
+	div.blogLandCard-description {font-size: 1.907079vmax;}
+	div.blogLandCard-date {font-size: 1.907079vmax;}
+
+	p {font-size: 1.907079vmax;}
+	h2 {font-size: 2.752053vmax;}
+	h1 {font-size: 3.527947vmax;}
+
+	main > div.blogContainer {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	pre {
+		font-family: "Courier New", Courier, monospace;
+		white-space: normal;
+		word-break: normal;
+		overflow-x:scroll;
+	}
+}
+*/
+
+
+
+/*
+ *
+ *
+ */
+
+
+/* Small screen, non-retina */
+@media only screen and (min-width: 320px) {
 	div.container > div.ahoy {
 		width: 50vh;
 		height: 50vh;
@@ -490,8 +546,216 @@ div.container > nav.ahoyy > div.ahoyyy {font-size: 1.1008212vmax; display:inline
 
 	pre {
 		font-family: "Courier New", Courier, monospace;
-		white-space: normal;
+		/*white-space: normal;*/
 		word-break: normal;
 		overflow-x:scroll; /*// works - could do this or white-space & word-break for toggle button*/
 	}
+
+}
+
+
+/* Small screen, retina, stuff to override above media query */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 320px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 320px),
+only screen and (                min-resolution: 192dpi) and (min-width: 320px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 320px) { 
+
+	div.container > div.ahoy {
+		width: 50vh;
+		height: 50vh;
+		line-height: 50vh;/*vmax;*/
+		font-size: 5.504106vh;/*2.752053vh;*/
+		margin-bottom: 0;
+	}
+	/*div.container > nav.ahoyy > div.ahoyyy {display:none;}*/
+	div.container > nav.ahoyy > div.ahoyyy {font-size: 4.4032848vmax;/*2.2016424vmax;*/}
+	div.container > nav.ahoyy {margin-bottom: 8vh;}
+	div.container > nav.ahoyy > li > a {font-size: 4.4032848vmax;/*2.2016424vmax;*/}
+
+	nav.blogNav > div.blogNavContainer {font-size: 4.4032848vmax;/*2.2016424vmax;*/}
+	main > div.blogTitle > div.blogDescription {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	main > div.blogTitle > div.blogDatePublished {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	div.blogLandCard-description {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	div.blogLandCard-date {font-size: 3.814158vmax;/*1.907079vmax;*/}
+
+	p {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	h2 {font-size: 5.504106vmax;/*2.752053vmax;*/}
+	h1 {font-size: 7.055894vmax;/*3.527947vmax;*/}
+
+	/**/
+	main > div.blogContainer {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	pre {
+		font-family: "Courier New", Courier, monospace;
+		/*white-space: normal;*/
+		word-break: normal;
+		overflow-x: scroll; /*// works - could do this or white-space & word-break for toggle button*/
+	}
+}
+
+
+/* Medium screen, non-retina */
+@media only screen and (min-width: 700px) {
+
+	div.container > div.ahoy {
+		width: 50vh;
+		height: 50vh;
+		line-height: 50vh;/*vmax;*/
+		font-size: 5.504106vh;/*2.752053vh;*/
+		margin-bottom: 0;
+	}
+	/*div.container > nav.ahoyy > div.ahoyyy {display:none;}*/
+	div.container > nav.ahoyy > div.ahoyyy {font-size: 4.4032848vmax;/*2.2016424vmax;*/}
+	div.container > nav.ahoyy {margin-bottom: 8vh;}
+	div.container > nav.ahoyy > li > a {font-size: 4.4032848vmax;/*2.2016424vmax;*/}
+
+	nav.blogNav > div.blogNavContainer {font-size: 4.4032848vmax;/*2.2016424vmax;*/}
+	main > div.blogTitle > div.blogDescription {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	main > div.blogTitle > div.blogDatePublished {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	div.blogLandCard-description {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	div.blogLandCard-date {font-size: 3.814158vmax;/*1.907079vmax;*/}
+
+	p {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	h2 {font-size: 5.504106vmax;/*2.752053vmax;*/}
+	h1 {font-size: 7.055894vmax;/*3.527947vmax;*/}
+
+	/**/
+	main > div.blogContainer {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	pre {
+		font-family: "Courier New", Courier, monospace;
+		/*white-space: normal;*/
+		word-break: normal;
+		overflow-x: scroll; /*// works - could do this or white-space & word-break for toggle button*/
+	}
+
+}
+
+
+
+/* Medium screen, retina, stuff to override above media query */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 700px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 700px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 700px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 700px),
+only screen and (                min-resolution: 192dpi) and (min-width: 700px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 700px) { 
+
+	div.container > div.ahoy {
+		width: 50vh;
+		height: 50vh;
+		line-height: 50vh;/*vmax;*/
+		font-size: 5.504106vh;/*2.752053vh;*/
+		margin-bottom: 0;
+	}
+	/*div.container > nav.ahoyy > div.ahoyyy {display:none;}*/
+	div.container > nav.ahoyy > div.ahoyyy {font-size: 4.4032848vmax;/*2.2016424vmax;*/}
+	div.container > nav.ahoyy {margin-bottom: 8vh;}
+	div.container > nav.ahoyy > li > a {font-size: 4.4032848vmax;/*2.2016424vmax;*/}
+
+	nav.blogNav > div.blogNavContainer {font-size: 4.4032848vmax;/*2.2016424vmax;*/}
+	main > div.blogTitle > div.blogDescription {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	main > div.blogTitle > div.blogDatePublished {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	div.blogLandCard-description {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	div.blogLandCard-date {font-size: 3.814158vmax;/*1.907079vmax;*/}
+
+	p {font-size: 3.814158vmax;/*1.907079vmax;*/}
+	h2 {font-size: 5.504106vmax;/*2.752053vmax;*/}
+	h1 {font-size: 7.055894vmax;/*3.527947vmax;*/}
+
+	/**/
+	main > div.blogContainer {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	pre {
+		font-family: "Courier New", Courier, monospace;
+		/*white-space: normal;*/
+		word-break: normal;
+		overflow-x: scroll; /*// works - could do this or white-space & word-break for toggle button*/
+	}
+
+}
+
+
+/* Large screen, non-retina */
+@media only screen and (min-width: 1300px) {
+
+	div.container > div.ahoy {
+		width: 50vh;
+		height: 50vh;
+		line-height: 50vh;/*vmax;*/
+		font-size: 2.752053vh;
+		margin-bottom: 0;
+	}
+	div.container > nav.ahoyy > div.ahoyyy {font-size: 2.2016424vmax;}
+	div.container > nav.ahoyy {margin-bottom: 8vh;}
+	div.container > nav.ahoyy > li > a {font-size: 2.2016424vmax;}
+
+	nav.blogNav > div.blogNavContainer {font-size: 2.2016424vmax;}
+	main > div.blogTitle > div.blogDescription {font-size: 1.907079vmax;}
+	main > div.blogTitle > div.blogDatePublished {font-size: 1.907079vmax;}
+	div.blogLandCard-description {font-size: 1.907079vmax;}
+	div.blogLandCard-date {font-size: 1.907079vmax;}
+
+	p {font-size: 1.907079vmax;}
+	h2 {font-size: 2.752053vmax;}
+	h1 {font-size: 3.527947vmax;}
+
+	/**/
+	main > div.blogContainer {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+}
+
+
+
+/* Large screen, retina, stuff to override above media query */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 1300px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 1300px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 1300px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 1300px),
+only screen and (                min-resolution: 192dpi) and (min-width: 1300px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 1300px) { 
+
+	div.container > div.ahoy {
+		width: 50vh;
+		height: 50vh;
+		line-height: 50vh;/*vmax;*/
+		font-size: 5.504106vh;/*2.752053vh;*/
+		margin-bottom: 0;
+	}
+	div.container > nav.ahoyy > div.ahoyyy {font-size: 2.2016424vmax;}
+	div.container > nav.ahoyy {margin-bottom: 8vh;}
+	div.container > nav.ahoyy > li > a {font-size: 2.2016424vmax;}
+
+	nav.blogNav > div.blogNavContainer {font-size: 2.2016424vmax;}
+	main > div.blogTitle > div.blogDescription {font-size: 1.907079vmax;}
+	main > div.blogTitle > div.blogDatePublished {font-size: 1.907079vmax;}
+	div.blogLandCard-description {font-size: 1.907079vmax;}
+	div.blogLandCard-date {font-size: 1.907079vmax;}
+
+	p {font-size: 1.907079vmax;}
+	h2 {font-size: 2.752053vmax;}
+	h1 {font-size: 3.527947vmax;}
+
+	main > div.blogContainer {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
 }

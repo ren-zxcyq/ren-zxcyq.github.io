@@ -22,7 +22,7 @@
 		<div class="blogTitle">
 			<h1>PowerShell Analysis - Dump AsyncRAT</h1>
 
-			<div class="blogDescription">Analysis of an AsyncRAT delivery PowerShell script.</div>
+			<div class="blogDescription">Analysis of a PowerShell script that delivers AsyncRAT.</div>
 			<div class="blogDatePublished">August 1, 2024</div>
 		</div>
 
@@ -39,7 +39,7 @@
 
 				<p>AsyncRAT sample: <blockquote><pre><code>https://bazaar.abuse.ch/sample/8dba2ac1f543d24b14ca1fdf0e1e2d8333c5cc669f78afc905d512aed21e6b2f/</code></pre></blockquote></p>
 
-				<p>This is an old sample, that was uploaded to bazaar and virustotal on October 2023. This is the first AsyncRAT sample I've ever analysed.</p>
+				<p>This is an old sample, that was uploaded to bazaar and virustotal on October 2023. This is the first AsyncRAT sample I&apos;ve ever analysed.</p>
 
 				<img src="/assets/imgs/1/1.png" width="70%" class="displayFull" />
 
@@ -49,7 +49,7 @@
 				<img src="/assets/imgs/1/2.png" width="60%" class="displayFull" />
 
 
-				<p>A search for the file's hash or the string <code>#mY cODER 3LOSH RAT ::::::</code> might reveal more information about the malware, however I'm going to skip this here.</p>
+				<p>A search for the file&apos;s hash or the string <code>#mY cODER 3LOSH RAT ::::::</code> might reveal more information about the malware, however I&apos;m going to skip this here.</p>
 
 				<img src="/assets/imgs/1/3.png" width="40%" class="displayFull" />
 
@@ -137,11 +137,11 @@ $EUZW.$JDRU32.Invoke($null, $SEYEYHHSSSSSSW)
 				</pre>
 				</blockquote>
 
-				Notable:
+				<p>Notable:</p>
 				<ul>
-				<li><code>Invoke()</code></li>
-				<li><code>asp**net_com**pi**ler.**e**x**e</code> - [aspnet_compiler.exe](https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/)</li>
-				<li>Calling <code>Replace("@","A")</code> against both <code>$aloooooooo</code> and <code>$geGWHZ</code>, transforms the string <code>4D5@</code> into <code>4D5A</code>, the magic number for a DOS header, indicative of a PE file.</li>
+					<li><p><code>Invoke()</code></p></li>
+					<li><p><code>asp**net_com**pi**ler.**e**x**e</code> - [aspnet_compiler.exe](https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/)</p></li>
+					<li><p>Calling <code>Replace("@","A")</code> against both <code>$aloooooooo</code> and <code>$geGWHZ</code>, transforms the string <code>4D5@</code> into <code>4D5A</code>, the magic number for a DOS header, indicative of a PE file.</p></li>
 				</ul>
 
 
@@ -213,7 +213,7 @@ $JDRU32 = (HzGaJsAt("0*00*00*0**0***00***0**00**0****0**0*0**0**00*0*".Replace('
 				<img src="/assets/imgs/1/16.png" width="50%" class="displayFull" />
 
 
-				<p>As the function doesn't maintain state anywhere, one can run it to get the return value.</p>
+				<p>As the function doesn&apos;t maintain state anywhere, one can run it to get the return value.</p>
 				<img src="/assets/imgs/1/17.png" width="60%" class="displayFull" />
 
 
@@ -223,7 +223,7 @@ $JDRU32 = (HzGaJsAt("0*00*00*0**0***00***0**00**0****0**0*0**0**00*0*".Replace('
 				<img src="/assets/imgs/1/19.png" width="90%" class="displayFull" />
 
 				<br />
-				<p>The next try catch statement, sets up PowerShell object <code>System.Reflection.Assembly</code> ([1](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assembly?view=net-8.0)) in <code>$JRES3E5</code> and loads the second variable's byte array into <code>$ncrx3</code>. It seems like this is a .NET payload.</p>
+				<p>The next try catch statement, sets up PowerShell object <code>System.Reflection.Assembly</code> ([1](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assembly?view=net-8.0)) in <code>$JRES3E5</code> and loads the second variable&apos;s byte array into <code>$ncrx3</code>. It seems like this is a .NET payload.</p>
 
 				<p>From <a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/reflection/reflection">MS Docs on Reflection</a></p>
 				<blockquote>
@@ -270,7 +270,7 @@ $JRES3E5 = [System.Reflection.Assembly]
 				<img src="/assets/imgs/1/27.png" width="43%" style="margin-right:5%" />
 
 
-				<p>This object allows access to the Image itself (but, I don't know too much about .NET, so take this with a grain of salt).</p>
+				<p>This object allows access to the Image itself (but, I don&apos;t know too much about .NET, so take this with a grain of salt).</p>
 				<p>One could for example access its methods as below.</p>
 
 				<blockquote>
@@ -282,7 +282,7 @@ $ncrx3.GetType('NewPE.PE').GetMethods()
 				</blockquote>
 
 
-				<p>The PowerShell here just obtains a handle to the object's <code>Execute</code> method.</p>
+				<p>The PowerShell here just obtains a handle to the object&apos;s <code>Execute</code> method.</p>
 
 				<blockquote>
 				<pre>
@@ -293,7 +293,7 @@ $EUZW = $EUS3W3.'GetMethod'('Execute')
 				</blockquote>
 
 
-				<p>The assembly's <code>Execute</code> method:</p>
+				<p>The assembly&apos;s <code>Execute</code> method:</p>
 				<img src="/assets/imgs/1/28.png" width="30%" style="margin-left:18%" />
 
 				<img src="/assets/imgs/1/29.png" width="30%" style="margin-right:18%" />
@@ -311,7 +311,7 @@ $EUZW = $EUS3W3.'GetMethod'('Execute')
 				<img src="/assets/imgs/1/32.png" width="60%" class="displayFull" />
 
 
-				<p>Variable <code>$UUSW23</code> contains a sequence of bytes that was populated on line 26. It's essentially what was in the first variable.</p>
+				<p>Variable <code>$UUSW23</code> contains a sequence of bytes that was populated on line 26. It&apos;s essentially what was in the first variable.</p>
 
 				<blockquote>
 				<pre>
@@ -322,7 +322,7 @@ $EUZW = $EUS3W3.'GetMethod'('Execute')
 				</blockquote>
 
 
-				<p>Variable <code>$EUZW</code> is a handle to the assembly's Execute method and has the property Invoke, which is also what <code>$JDRU32</code> is.</p>
+				<p>Variable <code>$EUZW</code> is a handle to the assembly&apos;s Execute method and has the property Invoke, which is also what <code>$JDRU32</code> is.</p>
 				<img src="/assets/imgs/1/33.png" width="25%" style="margin-left:25%" />
 
 				<img src="/assets/imgs/1/34.png" width="20%" style="margin-right:25%" />
@@ -399,10 +399,10 @@ $EUZW.$JDRU32.Invoke($null, $SEYEYHHSSSSSSW)
 				<img src="/assets/imgs/1/45.png" width="70%" class="displayFull" />
 
 
-				Notable strings:
+				<p>Notable strings:</p>
 				<ul>
-				<li><code>microstub</code> and</li>
-				<li><code>NewPE.dll</code></li>
+					<li><p><code>microstub</code> and</p></li>
+					<li><p><code>NewPE.dll</code></p></li>
 				</ul>
 				<img src="/assets/imgs/1/46.png" width="70%" class="displayFull" />
 
@@ -413,12 +413,12 @@ $EUZW.$JDRU32.Invoke($null, $SEYEYHHSSSSSSW)
 
 				<p>I searched for the hash online and found these two links:
 				<ul>
-					<li>60 / 73 hits on <a href="https://www.virustotal.com/gui/file/9c4382baca1a31a12c7e60bf324113f763e3d4e813ee518638a6f6f85aac3c70">VirusTotal</a></li>
-					<li>AsyncRAT from 9 months ago - <a href="https://bazaar.abuse.ch/sample/9c4382baca1a31a12c7e60bf324113f763e3d4e813ee518638a6f6f85aac3c70/">bazaar[.]abuse[.]ch link</a></li>
+					<li><p>60 / 73 hits on <a href="https://www.virustotal.com/gui/file/9c4382baca1a31a12c7e60bf324113f763e3d4e813ee518638a6f6f85aac3c70">VirusTotal</a></p></li>
+					<li><p>AsyncRAT from 9 months ago - <a href="https://bazaar.abuse.ch/sample/9c4382baca1a31a12c7e60bf324113f763e3d4e813ee518638a6f6f85aac3c70/">bazaar[.]abuse[.]ch link</a></p></li>
 				</ul></p>
 
 
-				<p>Dropped it on PE-bear. It's a valid PE.</p>
+				<p>Dropped it on PE-bear. It&apos;s a valid PE.</p>
 
 				<img src="/assets/imgs/1/47.png" width="60%" class="displayFull" />
 

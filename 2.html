@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<head>
+	<title>zxcyq.re</title>
+	<link rel="stylesheet" href="/assets/style.css" type="text/css" />
+</head>
+<body>
+
+	<header>
+		<nav class="blogNav">
+			<div class="blogNavContainer">
+				<ul>
+					<li class="headerLi headerLiCore"><a href="/index.html" class="headerACore"><div class="navLinkContent">zxcyq;re</div></a></li>
+					<li class="headerLi" ><a href="/blog.html" class="headerACore"><div class="navLinkContent">blog</div></a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="blogWrapper heightpercent">
+
+	<main>
+
+		<div class="blogTitle">
+			<h1>Ducktail TTPs Analysis - Powershell / LNK / UAC</h1>
+
+			<div class="blogDescription">Analysis of some Ducktail TTPs observed in 2024. LNK / PowerShell / UAC</div>
+			<div class="blogDatePublished">March 23, 2025</div>
+		</div>
+
+		<div class="blogContainer">
+			<article>
+				<div class="section-spacing-first-top-blog-post"></div>
+				<p>For this post I collected a few Ducktail samples from <a href="https://bazaar.abuse.ch/browse.php?search=tag%3ADucktail">Bazaar</a> with detection dates spanning across several months, in order to analyse them for similarities and perhaps identify potential detection points.</p> 
+				<p>The post first goes through a few aspects of phishing and LNK files, and then goes through 3 samples. These are an LNK example, an executable that looks like a Delphi PE file, and a zip file containing LNK files.</p>
+				<p>Only the last of these samples was live at the time of writing giving me the chance to walk through the infection chain.</p>
+
+				<div class="hr section-spacing-top"></div>
+				<h2># phishing</h2>
+
+				<p>Phishing techniques aiming for code execution can use anything that bypasses static and potentially intrusive filters during delivery, like zip inspection by e-mail services, while at the same time being inviting enough for unsuspecting users to perform the action required.</p>
+				<p>Besides Office Macros, and password encrypted and compressed archives like <code>.zip</code>, <code>.rar</code> or <code>.7z</code>, some of the file types that have seen a bit more wider use in the past couple of years have been slightly more exotic, such as <code>.iso</code>, <code>.vhd</code>, <code>.vhdx</code>, Onenote files (<code>.one</code>) as well as <code>.lnk</code> files.</p>
+
+				<div class="hr section-spacing-top"></div>
+				<h2># phishing - LNK</h2>
+				<p>LNK files are shortcut files, that follow this Microsoft specification: <a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-shllink/16cb4ca1-9339-4d0c-a68d-bf1d6cc0f943">MS-SHLLINK</a></p>
+				<img src="/assets/imgs/2/1.png" width="70%" class="displayFull" />
+
+				<p>Their magic number is <code>0x0000004c</code>. Here&apos;s how that looks in a hex editor.</p>
+
+				<img src="/assets/imgs/2/2.png" width="70%" class="displayFull" />
+
+
+				<p>The target of the link specifies the command (! NOT FILE) that will be executed upon double-clicking the shortcut.</p>
+				<p>Therefore, in theory one can make a shortcut execute any executable on disk, with any flag needed, upon double-clicking.</p>
+				<p>Some of the most common ideas observed here are <code>cmd.exe /c &lt;command&gt;</code>, or <code>powershell.exe -Command {&lt;command&gt;}</code>, however in theory any <a href="https://lolbas-project.github.io/#">LOLBIN</a> could be used.</p>
+
+					<p>A few variations of how LNK files can be used to launch malware are:</p>
+					<ul>
+						<li><p>embedded command that reaches out to a domain that hosts second stage files</p></li>
+						<li><p>launch another file bundled along with it.</p></li>
+						<li><p>launch file embedded within the LNK (a variant of this are polyglot LNKs -&gt; could perhaps detect it with a large LNK EDR rule or similar)</p></li>
+					</ul>
+
+				<div class="hr section-spacing-top"></div>
+				<h2># ducktail</h2>
+				<p>Ducktail is an infostealer.</p>
+				<p>It&apos;s aim is to steal user credentials usually stored in the user&apos;s browser data. It then exfiltrates them via some channel like discord or telegram.</p>
+				<p>Threat actors can follow this up by cracking the user&apos;s passwords and potentially logging on to the services the user has credentials for as the user.</p>
+				<p>Imagine receiving a message from your friend&apos;s account on social media.</p>
+				<p>This kind of thing while potentially not the most exciting, can end up being catastrophic for individuals but also in a corporate setting.</p>
+				<p>While not necessarily the case for Ducktail campaigns, there are entire groups specialising in brokering initial access; they effectively sell access to other potentially more sophisticated threat actors, like ransomware operators.</p>
+				<p>More information on Ducktail can be found here:</p>
+				<ul>
+					<li><p><a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.ducktail">malpedia</a></p></li>
+				</ul>
+				<p>Ducktail&apos;s overall behaviour falls within the broader MITRE techniques "Credentials from Password Stores" [T1555](https://attack.mitre.org/techniques/T1555/) (more specifically <code>T1555/003</code>), as well as exfiltration over web service [T1567](https://attack.mitre.org/techniques/T1567).</p>
+
+
+				<div class="hr section-spacing-top"></div>
+				<h2># sample 1 - LNK</h2>
+				<img src="/assets/imgs/2/3.png" width="70%" class="displayFull" />
+
+				<p>Upon double-clicking a shortcut file, explorer.exe launches the the file or command specified in the Target field.</p>
+				<p>Procmon is a great tool to use in this type of scenario for dynamic analysis, as it records what various running processes do, and allows us to observe them more closely.</p>
+				<p>Here seeing that the LNK file would run cmd which would in turn launch a powershell process that would execute an encoded command, I set up a display filter on procmon for cmd.exe.</p>
+				<img src="/assets/imgs/2/4.png" width="70%" class="displayFull" />
+
+				<p>One can see here cmd searching for the powershell executable on disk, opening the file via CreateFile and essentially launching it. (Process Create)</p>
+				<img src="/assets/imgs/2/5.png" width="90%" class="displayFull" />
+
+
+				<p>The <code>WindowStyle hidden</code> powershell option makes the powershell window invisible to the user.</p>
+				<p><a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_exe?view=powershell-5.1#syntax">More on powershell options here</a>.</p>
+				<img src="/assets/imgs/2/6.png" width="70%" class="displayFull" />
+
+
+				<p>The command run here:</p>
+				<img src="/assets/imgs/2/7.png" width="70%" class="displayFull" />
+				<p>The actual code invocation happens via Invoke-Expression.</p>
+				<img src="/assets/imgs/2/8.png" width="70%" class="displayFull" />
+				<p>We can defang this and execute it to see what it throws out on the other side by converting this to an echo or a Write-Host command.</p>
+				<img src="/assets/imgs/2/9.png" width="70%" class="displayFull" />
+				<img src="/assets/imgs/2/10.png" width="70%" class="displayFull" />
+				<img src="/assets/imgs/2/11.png" width="70%" class="displayFull" />
+
+				<p>So here I did just one more step and got the domain.</p>
+				<p>https://www.virustotal.]com/gui/domain/fixtest123.uk/relations</p>
+				<img src="/assets/imgs/2/12.png" width="70%" class="displayFull" />
+				<p>One of the many things one can see on VirusTotal for this domain, besides whois and DNS information, is a plethora of LNK files associated with it.</p>
+				<p>One such example:</p>
+				<img src="/assets/imgs/2/13.png" width="70%" class="displayFull" />
+				<p>With VPN on, I tried retrieving the file myself, but unfortunately the second stage was no longer available. I decided to not probe further, as the domain was already massively flagged.</p>
+				<img src="/assets/imgs/2/14.png" width="70%" class="displayFull" />
+
+
+				<div class="hr section-spacing-top"></div>
+				<h2># sample 2</h2>
+				<p>MZ file, based on the magic bytes <code>0x4D5A</code>, however this could also be a Delphi binary, based on the <code>MZP</code> ("P" stands for Pascal).</p>
+				<img src="/assets/imgs/2/15.png" width="70%" class="displayFull" />
+				<p>Its resource section shows an image of a document making it seem like a PDF.</p>
+				<img src="/assets/imgs/2/16.png" width="70%" class="displayFull" />
+				<p>Looking further into the header, we can see that this sample was supposedly compiled in March, not that this can&apos;t be modified manually.</p>
+				<img src="/assets/imgs/2/17.png" width="70%" class="displayFull" />
+				<p>Looking further at its sections, we can see that the executable is packed.</p>
+				<img src="/assets/imgs/2/18.png" width="70%" class="displayFull" />
+				<p>Notice the difference between Raw section size (left) and Virtual size (right).</p>
+				<p>Virtual size is the size of the PE in memory when it is run, while Raw size, is the size of the file on disk.</p>
+				<p>Also notice that these are not the standard PE section names one would expect to see, like <code>.text</code>, <code>.data</code>, <code>.rdata</code>; instead the sections are named <code>UPX0</code> and <code>UPX1</code>, which is the signature of Universal Packer or UPX packer.</p>
+				<p>(A good tool that could help with identifying that is Detect It Easy (DiE))</p>
+				<p>Without knowing much about Delphi binaries we can still possibly get something out of this.</p>
+				<p>For example, looking at file metadata, one can see the digital signature and certificate information.</p>
+				<p>One could further use the thumbprint to hunt for files from the same signer in the estate or on VirusTotal.</p>
+				<p>Using the thumbprint might be useful to track down TAs that reuse the same certificate over and over, or track down malicious binaries that use leaked certificates, for instance, when the victim&apos;s organisation either published the signing certificate publicly accidentally, or when the victim&apos;s certificate signing (private) key for the certificate was stolen.</p>
+				<p>Note that the certificate&apos;s information are associated with Ducktail.</p>
+				<img src="/assets/imgs/2/19.png" width="70%" class="displayFull" />
+
+				<p>Dynamic analysis.</p>
+				<p>I just ran this while having procmon open and monitoring network traffic, to see what it will do.</p>
+				<img src="/assets/imgs/2/20.png" width="70%" class="displayFull" />
+
+				<p>It opens up a button saying "Read PDF".</p>
+				<p>When that is clicked, it opens the user&apos;s browser and displays a PDF it downloads dynamically.</p>
+				<p>Unfortunately here this seems to have failed to retrieve the next stage binary and displays this error. (Malware often display errors in spite of actually successfully infecting the host or acting further.)</p>
+				<img src="/assets/imgs/2/21.png" width="70%" class="displayFull" />
+
+				<p>I suppose some websites hosting stagers are compromised websites, however some could also be disguised, non-malicious looking, infrastructure.</p>
+				<p>Here I did some more work, but for this blog post I will leave sample 2 at this.</p>
+				<img src="/assets/imgs/2/22.png" width="70%" class="displayFull" />
+
+
+				<div class="hr section-spacing-top"></div>
+				<h2>sample 3 - ZIP containing LNKs.</h2>
+				<p>Sample 3 is a zip file full of links.</p>
+				<img src="/assets/imgs/2/23.png" width="70%" class="displayFull" />
+
+				<p>All these four result in the same infection vector and TTPs but they retrieve data from different directories and files from the same payload delivery host.</p>
+				<img src="/assets/imgs/2/24.png" width="70%" class="displayFull" />
+
+				<p>Decoding the base64 command.</p>
+				<img src="/assets/imgs/2/25.png" width="70%" class="displayFull" />
+
+				<p>One thing at a time.</p>
+				<p>It decodes two base64 strings again, concatenates them and calls the cmdlet <code>Invoke-Webrequest</code> against the result to retrieve it.</p>
+				<p>So let&apos;s just go for one more step.</p>
+				<img src="/assets/imgs/2/26.png" width="90%" class="displayFull" />
+
+
+				<p>Aaand we have a domain, and it seems to be servicing jpgs like there&apos;s no tomorrow.</p>
+				<img src="/assets/imgs/2/27.png" width="70%" class="displayFull" />
+
+				<p>Schr&ouml;dinger&apos;s powershell; jpg and powershell at the same time?!</p>
+				<p>The jpgs are actually powershell executed via <code>Invoke-Expression</code>.</p>
+				<img src="/assets/imgs/2/28.png" width="20%" class="displayFull" />
+				<p>The LNK files here follow the exact same format. Below, one can see that the script retrieves a PDF file and saves it in the temp directory.</p>
+				<img src="/assets/imgs/2/29.png" width="100%" class="displayFull" />
+
+				<p>The same powershell script in vscode; executing the script line by line, and using Write-Host to display variable contents.</p>
+				<img src="/assets/imgs/2/30.png" width="90%" class="displayFull" />
+				<p>The script checks UAC, User Account Control, and acts differently based on its findings.</p>
+				<p>It checks the registry value <code>HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System.ConsentPromptBehaviorAdmin</code> (<a href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-gpsb/341747f5-6b5d-4d30-85fc-fa1cc04038d4">MS Docs</a>).</p>
+				<p>If the value is 0, it launches the below command. Its aim is to again execute another jpg.</p>
+				<img src="/assets/imgs/2/31.png" width="100%" class="displayFull" />
+				<img src="/assets/imgs/2/32.png" width="100%" class="displayFull" />
+				<p>I went over commands substituting cmdlets like <code>Start-Process</code> for <code>Write-Host</code> to print out what would be executed.</p>
+				<img src="/assets/imgs/2/33.png" width="100%" class="displayFull" />
+				<p>There are some stuff like a mutex in here. Mutex is a semaphore the malware can check to see if it has already infected the host, to avoid rerunning.</p>
+				<img src="/assets/imgs/2/34.png" width="30%" class="displayFull" />
+				<p>On the flip side of the UAC related if statement, it runs a UAC bypass via <code>fodhelper.exe</code>.</p>
+				<img src="/assets/imgs/2/35.png" width="60%" class="displayFull" />
+				<p>This is a well known UAC bypass, which is also in Metasploit.</p>
+				<p>The bypass effectively works by copying over the <code>fodhelper.exe</code> binary in another folder, and replaces one of the DLLs that it normally attempts to load, with a malicious payload.</p>
+				<p>Here, we can see <code>cmd.exe</code> creating the folder <code>C:\Windows&lt;SPACE&gt;</code>, and subdirectory <code>System32</code>, mimicking <code>C:\Windows\System32\</code>, and then copies over <code>fodhelper.exe</code>.</p>
+				<img src="/assets/imgs/2/36.png" width="70%" class="displayFull" />
+				<p>Another powershell command launched by the script downloads another jpg and saves it as <code>propsys.dll</code> on disk in the new directory.</p>
+				<img src="/assets/imgs/2/37.png" width="80%" class="displayFull" />
+				<img src="/assets/imgs/2/38.png" width="80%" class="displayFull" />
+				<p>The stager then opens the PDF it downloaded earlier in the browser, but was it doing anything in the background?</p>
+				<img src="/assets/imgs/2/39.png" width="50%" class="displayFull" />
+				<p>It downloaded and spawned <code>svczHost.exe</code> which then downloaded and spawned <code>rdp.exe</code> which then ran <code>netsh.exe</code> aaaaand</p>
+				<img src="/assets/imgs/2/40.png" width="70%" class="displayFull" />
+				<img src="/assets/imgs/2/41.png" width="40%" class="displayFull" />
+				<p>it installed a service.</p>
+				<img src="/assets/imgs/2/42.png" width="40%" class="displayFull" />
+				<p>Here are the files it created on disk.</p>
+				<img src="/assets/imgs/2/43.png" width="50%" class="displayFull" />
+				<p>Inspecting its actions a bit more closely, one can see for instance svczHost.exe being written to disk, and then it in turn accessing files related to Thunderbird as well as browser data.</p>
+				<img src="/assets/imgs/2/44.png" width="60%" class="displayFull" />
+				<p>There is also a network connection to an IP seemingly operated by a Vietnamese company called FPT Corporation.</p>
+				<img src="/assets/imgs/2/45.png" width="70%" class="displayFull" />
+				<p>Furthermore, there are references to another IP, this time from <code>rdp.exe</code>, to an IP operated by hosting company Hetzner.</p>
+				<img src="/assets/imgs/2/46.png" width="60%" class="displayFull" />
+				<img src="/assets/imgs/2/47.png" width="70%" class="displayFull" />
+
+
+				<div class="hr section-spacing-top"></div>
+				<h2>Sigma/Yara rules</h2>
+
+				<p>UAC bypass</p>
+				<blockquote>
+				<pre><code style="tab-size:2em">
+title: UAC Bypass
+status: experimental
+description: |
+	Detects loading of files in a directory masquerading as a system folder using space characters.
+	This can be a sign of DLL hijacking against known Windows binaries.
+references:
+	- https://ren-zxcyq.github.io
+author: ren-zxcyq
+date: 2025-03-23
+modified: 2025-03-23
+tags:
+	- attack.uac-bypass
+	- attack.T1548.002
+logsource:
+	category: image_load
+	product: windows
+detection:
+	selection_bin:
+		Image|startswith:
+			- 'C:\'
+	selection_masq:
+		ImageLoaded|contains:
+			- '\ '
+			- ' \'
+	selection_dir:
+		ImageLoaded|contains:
+			- 'Program Files'
+			- 'Program Files (x86)\'
+			- 'Windows'
+			- 'system32'
+			- 'SysWOW64'
+	condition: selection_bin and 1 of selection_masq and 1 of selection_dir
+falsepositives:
+	- Unknown
+level: medium
+				</pre></code>
+				</blockquote>
+
+				<p>Adding service with path being in temp.</p>
+				<blockquote>
+				<pre><code style="tab-size:2em">
+title: Service Binary in Suspicious Folder - Possibly Ducktail
+status: experimental
+description: |
+	Detect the creation of a service with a service binary located in a suspicious directory.
+	In the sample observed, the binary was in the temp directory.
+	For an extended check, please see references.
+references:
+	- https://ren-zxcyq.github.io
+	- rules/windows/registry/registry_set/registry_set_creation_service_susp_folder.yml
+author: ren-zxcyq
+date: 2025-03-25
+modified: 2025-03-25
+tags:
+	- attack.defense-evasion
+	- attack.t1569.002
+logsource:
+	category: registry_set
+	product: windows
+detection:
+	selection:
+		TargetObject|startswith: 'HKLM\System\CurrentControlSet\Services\'
+		TargetObject|endswith: '\ImagePath'
+		Details|contains:
+			- '\Temp\'
+	condition: selection
+falsepositives:
+	- Unknown
+level: medium
+				</code></pre>
+				</blockquote>
+
+
+				<p>In theory, pretty large LNK file?</p>
+				<blockquote>
+				<pre><code style="tab-size:2em">
+rule Suspicious_Size_LNK {
+	meta:
+		description = "Detects uncommon file size of LNK files"
+		author = "ren-zxcyq"
+		date = "2025-3-23"
+		severity = "LOW"
+	condition:
+		uint16(0) == 0x004c
+		and filename == "*\.lnk"
+		and filesize &gt; 500B
+}
+				</code></pre>
+				</blockquote>
+
+
+				<div class="hr section-spacing-top"></div>
+				<h2>A similar UAC bypass.</h2>
+
+				<p>[DLL hijacking](https://attack.mitre.org/techniques/T1574/001/)</p>
+				<p>A similar search order DLL hijacking, however against <code>ComputerDefaults.exe</code>.</p>
+
+				<p>Search order DLL hijacking</p>
+				<ul>
+					<li><p>The target binary searches for a DLL it wants to load in its current directory first.</p></li>
+					<li><p>Adversaries may substitute that DLL with their own malicious DLL.</p></li>
+					<li><p>So we can perhaps supply our own DLL if the binary is compiled to not use an absolute file path.</p></li>
+				</ul>
+
+				<p>So I recreated this in my own lab.</p>
+				<ul>
+					<li><p>compile shellcode.</p></li>
+					<li><p>embed it to a malicious DLL.</p></li>
+					<li><p>rename the malicious DLL to <code>propsys.dll</code>.</p></li>
+					<li><p>place the DLL in a folder next to a script (he uses a batch file that does the below)</p></li>
+					<li><p>create folder named <code>C:\Windows \System32</code></p></li>
+					<li><p>copy over the legitimate <code>C:\Windows\System32\ComputerDefaults.exe</code></p></li>
+					<li><p>copy over the evil <code>propsys.dll</code></p></li>
+					<li><p>call <code>ComputerDefaults.exe</code> (that exists on Win 11 as well)</p></li>
+					<li><p>this basically executes the malicious DLL bypassing UAC and runs the shellcode as admin.</p></li>
+					<li><p>get a high privileged meterpreter shell.</p></li>
+					<li><p>run the script.</p></li>
+				</ul>
+				<p>Create a DLL</p>
+				<img src="/assets/imgs/2/48.png" width="70%" class="displayFull" />
+				<p>Creating the Windows&lt;space&gt; directory.</p>
+				<img src="/assets/imgs/2/49.png" width="50%" class="displayFull" />
+				<p>This is not in an admin prompt.</p>
+				<img src="/assets/imgs/2/50.png" width="70%" class="displayFull" />
+				<p>Set up listener to catch the shell.</p>
+				<img src="/assets/imgs/2/51.png" width="40%" class="displayFull" />
+				<p>(Powershell didn&apos;t like <code>C:\Windows&lt;SPACE&gt;</code>, so had to go into a <code>cmd.exe</code> shell.)</p>
+				<p>Run <code>ComputerDefaults.exe</code>.</p>
+				<img src="/assets/imgs/2/52.png" width="40%" class="displayFull" />
+				<p>Caught the shell.</p>
+				<img src="/assets/imgs/2/53.png" width="70%" class="displayFull" />
+				<img src="/assets/imgs/2/54.png" width="70%" class="displayFull" />
+
+			</article>
+		</div>
+	</main>
+	</div>
+</body>
+</html>
