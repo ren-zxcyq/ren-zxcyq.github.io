@@ -37,7 +37,7 @@
 				<div class="hr section-spacing-top"></div>
 				<h2># init</h2>
 
-				<p>AsyncRAT sample: <blockquote><pre><code>https://bazaar.abuse.ch/sample/8dba2ac1f543d24b14ca1fdf0e1e2d8333c5cc669f78afc905d512aed21e6b2f/</code></pre></blockquote></p>
+				<p><a href="https://bazaar.abuse.ch/sample/8dba2ac1f543d24b14ca1fdf0e1e2d8333c5cc669f78afc905d512aed21e6b2f/">AsyncRAT sample on Bazaar</a></p>
 
 				<p>This is an old sample, that was uploaded to bazaar and virustotal on October 2023. This is the first AsyncRAT sample I&apos;ve ever analysed.</p>
 
@@ -140,7 +140,7 @@ $EUZW.$JDRU32.Invoke($null, $SEYEYHHSSSSSSW)
 				<p>Notable:</p>
 				<ul>
 					<li><p><code>Invoke()</code></p></li>
-					<li><p><code>asp**net_com**pi**ler.**e**x**e</code> - [aspnet_compiler.exe](https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/)</p></li>
+					<li><p><code>asp**net_com**pi**ler.**e**x**e</code> - <a href="https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/">aspnet_compiler.exe</a></p></li>
 					<li><p>Calling <code>Replace("@","A")</code> against both <code>$aloooooooo</code> and <code>$geGWHZ</code>, transforms the string <code>4D5@</code> into <code>4D5A</code>, the magic number for a DOS header, indicative of a PE file.</p></li>
 				</ul>
 
@@ -223,7 +223,7 @@ $JDRU32 = (HzGaJsAt("0*00*00*0**0***00***0**00**0****0**0*0**0**00*0*".Replace('
 				<img src="/assets/imgs/1/19.png" width="90%" class="displayFull" />
 
 				<br />
-				<p>The next try catch statement, sets up PowerShell object <code>System.Reflection.Assembly</code> ([1](https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assembly?view=net-8.0)) in <code>$JRES3E5</code> and loads the second variable&apos;s byte array into <code>$ncrx3</code>. It seems like this is a .NET payload.</p>
+				<p>The next try catch statement, sets up PowerShell object <code>System.Reflection.Assembly</code> (<a href="https://learn.microsoft.com/en-us/dotnet/api/system.reflection.assembly?view=net-8.0">ms-docs</a>) in <code>$JRES3E5</code> and loads the second variable&apos;s byte array into <code>$ncrx3</code>. It seems like this is a .NET payload.</p>
 
 				<p>From <a href="https://learn.microsoft.com/en-us/dotnet/fundamentals/reflection/reflection">MS Docs on Reflection</a></p>
 				<blockquote>

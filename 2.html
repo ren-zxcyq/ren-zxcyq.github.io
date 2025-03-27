@@ -57,7 +57,7 @@
 					<ul>
 						<li><p>embedded command that reaches out to a domain that hosts second stage files</p></li>
 						<li><p>launch another file bundled along with it.</p></li>
-						<li><p>launch file embedded within the LNK (a variant of this are polyglot LNKs -&gt; could perhaps detect it with a large LNK EDR rule or similar)</p></li>
+						<li><p>launch file embedded within the LNK (a variant of this are polyglot LNKs)</p></li>
 					</ul>
 
 				<div class="hr section-spacing-top"></div>
@@ -72,7 +72,7 @@
 				<ul>
 					<li><p><a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.ducktail">malpedia</a></p></li>
 				</ul>
-				<p>Ducktail&apos;s overall behaviour falls within the broader MITRE techniques "Credentials from Password Stores" [T1555](https://attack.mitre.org/techniques/T1555/) (more specifically <code>T1555/003</code>), as well as exfiltration over web service [T1567](https://attack.mitre.org/techniques/T1567).</p>
+				<p>Ducktail&apos;s overall behaviour falls within the broader MITRE techniques "Credentials from Password Stores" <a href="https://attack.mitre.org/techniques/T1555/">T1555</a>) (more specifically <code>T1555/003</code>), as well as exfiltration over web service <a href="https://attack.mitre.org/techniques/T1567">T1567</a>).</p>
 
 
 				<div class="hr section-spacing-top"></div>
@@ -89,7 +89,7 @@
 
 
 				<p>The <code>WindowStyle hidden</code> powershell option makes the powershell window invisible to the user.</p>
-				<p><a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_exe?view=powershell-5.1#syntax">More on powershell options here</a>.</p>
+				<p><a href="https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_exe?view=powershell-5.1#syntax">More on powershell.exe options here</a>.</p>
 				<img src="/assets/imgs/2/6.png" width="70%" class="displayFull" />
 
 
@@ -125,7 +125,6 @@
 				<p>Notice the difference between Raw section size (left) and Virtual size (right).</p>
 				<p>Virtual size is the size of the PE in memory when it is run, while Raw size, is the size of the file on disk.</p>
 				<p>Also notice that these are not the standard PE section names one would expect to see, like <code>.text</code>, <code>.data</code>, <code>.rdata</code>; instead the sections are named <code>UPX0</code> and <code>UPX1</code>, which is the signature of Universal Packer or UPX packer.</p>
-				<p>(A good tool that could help with identifying that is Detect It Easy (DiE))</p>
 				<p>Without knowing much about Delphi binaries we can still possibly get something out of this.</p>
 				<p>For example, looking at file metadata, one can see the digital signature and certificate information.</p>
 				<p>One could further use the thumbprint to hunt for files from the same signer in the estate or on VirusTotal.</p>
@@ -234,21 +233,21 @@ logsource:
 	category: image_load
 	product: windows
 detection:
-	selection_bin:
-		Image|startswith:
+	selection_dir_c:
+		ImageLoaded|startswith:
 			- 'C:\'
 	selection_masq:
 		ImageLoaded|contains:
 			- '\ '
 			- ' \'
-	selection_dir:
+	selection_dir_masq:
 		ImageLoaded|contains:
 			- 'Program Files'
 			- 'Program Files (x86)\'
 			- 'Windows'
 			- 'system32'
 			- 'SysWOW64'
-	condition: selection_bin and 1 of selection_masq and 1 of selection_dir
+	condition: selection_dir_c and 1 of selection_masq and 1 of selection_dir_masq
 falsepositives:
 	- Unknown
 level: medium
@@ -266,7 +265,7 @@ description: |
 	For an extended check, please see references.
 references:
 	- https://ren-zxcyq.github.io
-	- rules/windows/registry/registry_set/registry_set_creation_service_susp_folder.yml
+	- https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_creation_service_susp_folder.yml
 author: ren-zxcyq
 date: 2025-03-25
 modified: 2025-03-25
@@ -311,7 +310,7 @@ rule Suspicious_Size_LNK {
 				<div class="hr section-spacing-top"></div>
 				<h2>A similar UAC bypass.</h2>
 
-				<p>[DLL hijacking](https://attack.mitre.org/techniques/T1574/001/)</p>
+				<p><a href="https://attack.mitre.org/techniques/T1574/001/">DLL hijacking</a></p>
 				<p>A similar search order DLL hijacking, however against <code>ComputerDefaults.exe</code>.</p>
 
 				<p>Search order DLL hijacking</p>
