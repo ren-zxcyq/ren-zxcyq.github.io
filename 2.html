@@ -311,16 +311,16 @@ rule Suspicious_Size_LNK {
 				<h2>A similar UAC bypass.</h2>
 
 				<p><a href="https://attack.mitre.org/techniques/T1574/001/">DLL hijacking</a></p>
-				<p>A similar search order DLL hijacking, however against <code>ComputerDefaults.exe</code>.</p>
+				<p>Let's look at another search order DLL hijacking, this time against <code>ComputerDefaults.exe</code>.</p>
 
 				<p>Search order DLL hijacking</p>
 				<ul>
 					<li><p>The target binary searches for a DLL it wants to load in its current directory first.</p></li>
-					<li><p>Adversaries may substitute that DLL with their own malicious DLL.</p></li>
-					<li><p>So we can perhaps supply our own DLL if the binary is compiled to not use an absolute file path.</p></li>
+					<li><p>An attacker may substitute a DLL the binary normally loads with their own malicious DLL.</p></li>
+					<li><p>So we can perhaps supply our own DLL if the binary is compiled to not load that using the DLL's absolute file path.</p></li>
 				</ul>
 
-				<p>So I recreated this in my own lab.</p>
+				<p>Lab flow</p>
 				<ul>
 					<li><p>compile shellcode.</p></li>
 					<li><p>embed it to a malicious DLL.</p></li>
