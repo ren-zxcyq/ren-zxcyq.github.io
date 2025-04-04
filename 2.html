@@ -220,7 +220,7 @@ title: UAC Bypass
 status: experimental
 description: |
 	Detects loading of files in a directory masquerading as a system folder using space characters.
-	This can be a sign of DLL hijacking against known Windows binaries.
+	This can be a sign of DLL hijacking against standard Windows binaries.
 references:
 	- https://ren-zxcyq.github.io
 author: ren-zxcyq
@@ -311,13 +311,13 @@ rule Suspicious_Size_LNK {
 				<h2>A similar UAC bypass.</h2>
 
 				<p><a href="https://attack.mitre.org/techniques/T1574/001/">DLL hijacking</a></p>
-				<p>Let's look at another search order DLL hijacking, this time against <code>ComputerDefaults.exe</code>.</p>
+				<p>Let's look at another similar UAC bypass via search order DLL hijacking, this time against <code>ComputerDefaults.exe</code>.</p>
 
 				<p>Search order DLL hijacking</p>
 				<ul>
 					<li><p>The target binary searches for a DLL it wants to load in its current directory first.</p></li>
 					<li><p>An attacker may substitute a DLL the binary normally loads with their own malicious DLL.</p></li>
-					<li><p>So we can perhaps supply our own DLL if the binary is compiled to not load that using the DLL's absolute file path.</p></li>
+					<li><p>If in attacker supplies their own DLL and the binary is compiled to for instance not load the DLL using the DLL's absolute file path, this will result in code execution within the binary's context.</p></li>
 				</ul>
 
 				<p>Lab flow</p>
