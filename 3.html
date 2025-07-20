@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<head>
+	<title>zxcyq.re</title>
+	<link rel="stylesheet" href="/assets/style.css" type="text/css" />
+</head>
+<body>
+
+	<header>
+		<nav class="blogNav">
+			<div class="blogNavContainer">
+				<ul>
+					<li class="headerLi headerLiCore"><a href="/index.html" class="headerACore"><div class="navLinkContent">zxcyq;re</div></a></li>
+					<li class="headerLi" ><a href="/blog.html" class="headerACore"><div class="navLinkContent">blog</div></a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<div class="blogWrapper heightpercent">
+
+	<main>
+
+		<div class="blogTitle">
+			<h1>bindiff intro</h1>
+
+			<div class="blogDescription">Introduction to bindiffing for fun and profit.</div>
+			<div class="blogDatePublished">July 20, 2025</div>
+		</div>
+
+		<div class="blogContainer">
+			<article>
+				<div class="section-spacing-first-top-blog-post"></div>
+				<p>This is a very short introduction into what bindiffing is. After going over some of the terms related to bindiffing, and briefly looking at the structure of Windows patches, the post goes over a few tools used to diff binaries, and closed with a two minute rundown of how to run bindiff.</p>
+
+				<div class="hr section-spacing-top"></div>
+				<h2># patch diffing</h2>
+
+				<div class="section-spacing-top"></div>
+				<p>Software Diffing - why?</p>
+				<ul>
+				<li><p>1-days</p></li>
+				<li><p>researchers, perhaps to discover whether their suggested fixes were applied</p></li>
+				<li><p>compare, categorise and track the evolution of malware; this could help with attribution, however due to obfuscation it is more of a manual process</p></li>
+				</ul>
+
+				<div class="section-spacing-top"></div>
+				<p>Patch Tuesday</p>
+				<ul>
+				<li><p>Is an unofficial term used to refer to when several large companies regularly release software patches for their software products.</p></li>
+				<li><p>Occurs on the second Tuesday of each month.</p></li>
+				</ul>
+
+				<div class="section-spacing-top"></div>
+				<p>Microsoft on patch Tuesday usually releases security updates.</p>
+				<p>More about <a href="https://learn.microsoft.com/en-us/windows/deployment/update/release-cycle#types-of-update-releases">Microsoft's patching schedule can be found here</a>.</p>
+				<ul>
+					<li><p>2nd Tuesday of each month - Security patching</p></li>
+				</ul>
+
+				<p>Apple usually releases software updates on the second week of each month; not necessarily on Tuesdays.</p>
+				<ul>
+					<li><p>More about <a href="https://support.apple.com/en-us/100100">Apple security updates can be found here</a>.</p></li>
+				</ul>
+
+
+				<div class="hr section-spacing-top"></div>
+				<h2># how is a Microsoft patch structured? at a glance</h2>
+
+				<div class="section-spacing-top"></div>
+				<p>Based on <a href="https://learn.microsoft.com/en-us/windows/deployment/update/forward-reverse-differentials">ms-docs on patches</a></p>
+				<ul>
+				<li><p>Updates to executables are saved in Patch Storage Files (PSF) - another name for them is express download files</p></li>
+				<li><p>PSF files are hosted or cached on Windows Update or other update management or distribution servers</p></li>
+				<li><p>A device applying express updates uses network protocol to determine optimal differentials, then downloads only what is needed from the update distribution endpoints.</p></li>
+				<li><p>Update package metadata, content manifests, and forward and reverse differentials are packaged into a cabinet file (.cab). This .cab file, and the applicability logic, will also be wrapped in Microsoft Standalone Update (.msu) format.</p></li>
+				</ul>
+
+
+				<img src="/assets/imgs/3/windows-patch-msu-cab.png" width="25%" class="displayFull" />
+
+
+
+				<p>f folder -> forward diffs</p>
+				<p>r folder -> reverse diffs</p>
+				<p>n folder -> null diffs (used for instance when a new file is introduced)</p>
+
+
+
+				<div class="section-spacing-top"></div>
+				<h2># apply patches manually?</h2>
+				<p>There is an excellent walkthrough on how to unpack an msu and apply a delta patch here: <a href="https://www.coresecurity.com/core-labs/articles/how-deal-microsoft-monthly-updates-reverse-engineering-binary-patches">fortra - coresecurity</a>.</p>
+
+
+
+				<div class="hr section-spacing-top"></div>
+				<h2># tools</h2>
+
+				<div class="section-spacing-top"></div>
+				<p># Diaphora</p>
+				<p><a href="https://github.com/joxeankoret/diaphora">diaphora.re - github</a></p>
+				<p><a href="https://github.com/joxeankoret/diaphora/releases">releases - github</a></p>
+
+				<img src="/assets/imgs/3/diaphora.png" width="70%" class="displayFull" />
+
+				<div class="section-spacing-top"></div>
+				<p># Bindiff</p>
+				<p><a href="https://zynamics.com/bindiff.html">bindiff - zynamics.com</a></p>
+				<p><a href="https://github.com/google/bindiff/releases/tag/v8">releases - github</a></p>
+
+				<img src="/assets/imgs/3/bindiff.png" width="70%" class="displayFull" />
+
+				<div class="section-spacing-top"></div>
+				<p># Winbindex</p>
+
+				<p><a href="https://winbindex.m417z.com/">winbindex</a></p>
+				<p><a href="https://github.com/m417z/winbindex">winbindex github</a></p>
+
+				<p>Amazing resource. Winbindex is essentially a catalogue of Windows binaries, files which appear in update packages.</p>
+				<p>It allows viewing info about the files, and downloading some of them from Microsoft servers. -> exe / dll / sys files</p>
+				<p>At the time of writing the servers are at <code>microsoft[.]com</code> and <code>windows[.]net</code></p>
+
+
+				<img src="/assets/imgs/3/winbindex.png" width="70%" class="displayFull" />
+
+
+
+				<div class="hr section-spacing-top"></div>
+				<h2>Running bindiff in Binary ninja</h2>
+
+				<div class="section-spacing-top"></div>
+				<p>Using bindiff / diaphora with IDA is straightforward, however my RE tool of choice lately has been Binary Ninja.</p>
+
+				<p>One needs only to compile it for the specific python / Binja version.</p>
+
+				<p>As an example let's compare x and y.</p>
+
+				<p>The steps are pretty straight forward.</p>
+
+				<p>Open a file in binja.</p>
+				<img src="/assets/imgs/3/winbindex.png" width="70%" class="displayFull" />
+
+
+				<p>Run binexport against both files / bndbs. This generates two `.binexport` files.</p>
+
+				<img src="/assets/imgs/3/winbindex.png" width="70%" class="displayFull" />
+
+
+				<p>Run bindiff and pass the `.binexport` files for comparison..</p>
+
+
+				<img src="/assets/imgs/3/winbindex.png" width="70%" class="displayFull" />
+
