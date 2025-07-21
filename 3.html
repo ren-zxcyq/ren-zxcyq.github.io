@@ -127,25 +127,53 @@
 				<h2>Running bindiff in Binary ninja</h2>
 
 				<div class="section-spacing-top"></div>
-				<p>Using bindiff / diaphora with IDA is straightforward, however my RE tool of choice lately has been Binary Ninja.</p>
+				<p>Using bindiff / diaphora is straightforward, one needs to load the binary in a disassembler, run the initial analysis, optionally do additional analysis, export the binary ida file or bndb file, and then run bindiff across both databases.</p>
 
-				<p>One needs only to compile it for the specific python / Binja version.</p>
+				<p>My RE tool of choice lately has been Binary Ninja. There is a pretty cool plugin called `binaryninja-bindiff-viewer` that supports the overall bindiff workflow; it is available <a href="https://github.com/PistonMiner/binaryninja-bindiff-viewer">on github here</a></p>
 
-				<p>As an example let's compare x and y.</p>
+				<p>One needs only to compile bindiff/binexport for the specific python / Binja version.</p>
+
+				<img src="/assets/imgs/3/binaryninja-bindiff-viewer.png" width="70%" class="displayFull" />
+
+
+				<p>As an example let's compare two versions of an executable.</p>
 
 				<p>The steps are pretty straight forward.</p>
 
-				<p>Open a file in binja.</p>
-				<img src="/assets/imgs/3/winbindex.png" width="70%" class="displayFull" />
+				<p>Open two files in binja and let autoanalysis run. Once that's done, run BinExport (Plugins > BinExport) against both files / bndbs.</p>
+
+				<img src="/assets/imgs/3/binexport-1.png" width="90%" class="displayFull" />
+				<img src="/assets/imgs/3/binexport-2.png" width="90%" class="displayFull" />
 
 
-				<p>Run binexport against both files / bndbs. This generates two `.binexport` files.</p>
 
-				<img src="/assets/imgs/3/winbindex.png" width="70%" class="displayFull" />
-
-
-				<p>Run bindiff and pass the `.binexport` files for comparison..</p>
+				<p>This generates two `.binexport` files.</p>
+				<img src="/assets/imgs/3/binexport-3.png" width="30%" class="displayFull" />
 
 
-				<img src="/assets/imgs/3/winbindex.png" width="70%" class="displayFull" />
 
+				<p>Run bindiff and pass in the `.binexport` files for comparison..</p>
+
+				<img src="/assets/imgs/3/bindiff-3.png" width="70%" class="displayFull" />
+
+
+
+				<p>This generates a `.bindiff` file. Open one of the files on binja, and then run BinDiff Viewer (Plugins > BinDiff Viewer) against the `.bindiff` file.</p>
+
+				<img src="/assets/imgs/3/bindiff-1.png" width="70%" class="displayFull" />
+				<img src="/assets/imgs/3/bindiff-4.png" width="70%" class="displayFull" />
+
+				
+				<p>This then displays the below table of functions mapped across the databases. These can be ordered based on similarity or bindiff confidence and so on. Double-clicking a memory location, opens it in the main Binary Ninja view. In this case the file does not appear to have been changed.</p>
+
+				<img src="/assets/imgs/3/bindiff-5.png" width="70%" class="displayFull" />
+
+				<p>One can use the bindiff callgraph as well on its own.</p>
+
+				<img src="/assets/imgs/3/bindiff-7-different-example-callgraph.png" width="90%" class="displayFull" />
+
+
+				<p>Having both files' graphs open side by side and using this similarity table within the disaseembler itself however, is very useful.</p>
+				<p>Looking at a different example, the differences are highlighted; sections in red are more interesting.</p>
+
+				<img src="/assets/imgs/3/bindiff-6-different-example.png" width="90%" class="displayFull" />
