@@ -695,11 +695,11 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 700px) 
 	div.container > nav.ahoyy {margin-bottom: 8vh;}
 	div.container > nav.ahoyy > li > a {font-size: 1.628vmax;}
 
-	nav.blogNav > div.blogNavContainer {font-size: 1.314vmax;}
-	main > div.blogTitle > div.blogDescription {font-size: 1.314vmax;}
-	main > div.blogTitle > div.blogDatePublished {font-size: 1.314vmax;}
-	div.blogLandCard-description {font-size: 1.314vmax;}
-	div.blogLandCard-date {font-size: 1.314vmax;}
+	nav.blogNav > div.blogNavContainer {font-size: 1vmax;}
+	main > div.blogTitle > div.blogDescription {font-size: 1vmax;}
+	main > div.blogTitle > div.blogDatePublished {font-size: 1vmax;}
+	div.blogLandCard-description {font-size: 1vmax;}
+	div.blogLandCard-date {font-size: 1vmax;}
 
 	p {font-size: 1vmax;}
 	h2 {font-size: 1.314vmax;}
@@ -733,11 +733,11 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 1300px)
 	div.container > nav.ahoyy {margin-bottom: 8vh;}
 	div.container > nav.ahoyy > li > a {font-size: 1.628vmax;}
 
-	nav.blogNav > div.blogNavContainer {font-size: 1.314vmax;}
-	main > div.blogTitle > div.blogDescription {font-size: 1.314vmax;}
-	main > div.blogTitle > div.blogDatePublished {font-size: 1.314vmax;}
-	div.blogLandCard-description {font-size: 1.314vmax;}
-	div.blogLandCard-date {font-size: 1.314vmax;}
+	nav.blogNav > div.blogNavContainer {font-size: 1vmax;}
+	main > div.blogTitle > div.blogDescription {font-size: 1vmax;}
+	main > div.blogTitle > div.blogDatePublished {font-size: 1vmax;}
+	div.blogLandCard-description {font-size: 1vmax;}
+	div.blogLandCard-date {font-size: 1vmax;}
 
 	p {font-size: 1vmax;}
 	h2 {font-size: 1.314vmax;}
@@ -768,11 +768,11 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 1300px)
 	div.container > nav.ahoyy {margin-bottom: 8vh;}
 	div.container > nav.ahoyy > li > a {font-size: 1vmax;}
 
-	nav.blogNav > div.blogNavContainer {font-size: 1.314vmax;}
-	main > div.blogTitle > div.blogDescription {font-size: 1.314vmax;}
-	main > div.blogTitle > div.blogDatePublished {font-size: 1.314vmax;}
-	div.blogLandCard-description {font-size: 1.314vmax;}
-	div.blogLandCard-date {font-size: 1.314vmax;}
+	nav.blogNav > div.blogNavContainer {font-size: 0.8vmax;}
+	main > div.blogTitle > div.blogDescription {font-size: 0.8vmax;}
+	main > div.blogTitle > div.blogDatePublished {font-size: 0.8vmax;}
+	div.blogLandCard-description {font-size: 0.8vmax;}
+	div.blogLandCard-date {font-size: 0.8vmax;}
 
 	p {font-size: 1vmax;}
 	h2 {font-size: 1.314vmax;}
@@ -803,15 +803,88 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 2000px)
 		font-size: 5.504106vh;/*2.752053vh;*/
 		margin-bottom: 0;
 	}
-	div.container > nav.ahoyy > div.ahoyyy {font-size: 1.314vmax;}
+	div.container > nav.ahoyy > div.ahoyyy {font-size: 1vmax;}
 	div.container > nav.ahoyy {margin-bottom: 8vh;}
-	div.container > nav.ahoyy > li > a {font-size: 1.314vmax;}
+	div.container > nav.ahoyy > li > a {font-size: 1vmax;}
 
-	nav.blogNav > div.blogNavContainer {font-size: 1.314vmax;}
-	main > div.blogTitle > div.blogDescription {font-size: 1.314vmax;}
-	main > div.blogTitle > div.blogDatePublished {font-size: 1.314vmax;}
-	div.blogLandCard-description {font-size: 1.314vmax;}
-	div.blogLandCard-date {font-size: 1.314vmax;}
+	nav.blogNav > div.blogNavContainer {font-size: 0.8vmax;}
+	main > div.blogTitle > div.blogDescription {font-size: 0.8vmax;}
+	main > div.blogTitle > div.blogDatePublished {font-size: 0.8vmax;}
+	div.blogLandCard-description {font-size: 0.8vmax;}
+	div.blogLandCard-date {font-size: 0.8vmax;}
+
+	p {font-size: 1vmax;}
+	h2 {font-size: 1.314vmax;}
+	h1 {font-size: 1.942vmax;}
+
+	main > div.blogContainer {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+}
+
+
+
+
+/* Large screen, non-retina */
+@media only screen and (min-width: 2600px) {
+
+	div.container > div.ahoy {
+		width: 50vh;
+		height: 50vh;
+		line-height: 50vh;/*vmax;*/
+		font-size: 5.504106vh;/*2.752053vh;*/
+		margin-bottom: 0;
+	}
+	div.container > nav.ahoyy > div.ahoyyy {font-size: 1vmax;}
+	div.container > nav.ahoyy {margin-bottom: 8vh;}
+	div.container > nav.ahoyy > li > a {font-size: 1vmax;}
+
+	nav.blogNav > div.blogNavContainer {font-size: 0.6vmax;}
+	main > div.blogTitle > div.blogDescription {font-size: 0.6vmax;}
+	main > div.blogTitle > div.blogDatePublished {font-size: 0.6vmax;}
+	div.blogLandCard-description {font-size: 0.6vmax;}
+	div.blogLandCard-date {font-size: 0.6vmax;}
+
+	p {font-size: 1vmax;}
+	h2 {font-size: 1.314vmax;}
+	h1 {font-size: 1.942vmax;}
+
+	main > div.blogContainer {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+}
+
+
+
+/* Large screen, retina, stuff to override above media query */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2)      and (min-width: 2600px),
+only screen and (   min--moz-device-pixel-ratio: 2)      and (min-width: 2600px),
+only screen and (     -o-min-device-pixel-ratio: 2/1)    and (min-width: 2600px),
+only screen and (        min-device-pixel-ratio: 2)      and (min-width: 2600px),
+only screen and (                min-resolution: 192dpi) and (min-width: 2600px),
+only screen and (                min-resolution: 2dppx)  and (min-width: 2600px) { 
+
+	div.container > div.ahoy {
+		width: 50vh;
+		height: 50vh;
+		line-height: 50vh;/*vmax;*/
+		font-size: 5.504106vh;/*2.752053vh;*/
+		margin-bottom: 0;
+	}
+	div.container > nav.ahoyy > div.ahoyyy {font-size: 1vmax;}
+	div.container > nav.ahoyy {margin-bottom: 8vh;}
+	div.container > nav.ahoyy > li > a {font-size: 1vmax;}
+
+	nav.blogNav > div.blogNavContainer {font-size: 0.6vmax;}
+	main > div.blogTitle > div.blogDescription {font-size: 0.6vmax;}
+	main > div.blogTitle > div.blogDatePublished {font-size: 0.6vmax;}
+	div.blogLandCard-description {font-size: 0.6vmax;}
+	div.blogLandCard-date {font-size: 0.6vmax;}
 
 	p {font-size: 1vmax;}
 	h2 {font-size: 1.314vmax;}
