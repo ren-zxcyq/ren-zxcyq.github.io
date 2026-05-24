@@ -774,9 +774,9 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 1300px)
 	div.blogLandCard-description {font-size: 0.8vmax;}
 	div.blogLandCard-date {font-size: 0.8vmax;}
 
-	p {font-size: 1vmax;}
-	h2 {font-size: 1.314vmax;}
-	h1 {font-size: 1.942vmax;}
+	p {font-size: 0.8vmax;}
+	h2 {font-size: 1vmax;}
+	h1 {font-size: 1.314vmax;}
 
 	main > div.blogContainer {
 		margin-left: 0;
@@ -813,9 +813,9 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 2000px)
 	div.blogLandCard-description {font-size: 0.8vmax;}
 	div.blogLandCard-date {font-size: 0.8vmax;}
 
-	p {font-size: 1vmax;}
-	h2 {font-size: 1.314vmax;}
-	h1 {font-size: 1.942vmax;}
+	p {font-size: 0.8vmax;}
+	h2 {font-size: 1vmax;}
+	h1 {font-size: 1.314vmax;}
 
 	main > div.blogContainer {
 		margin-left: 0;
@@ -847,9 +847,9 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 2000px)
 	div.blogLandCard-description {font-size: 0.6vmax;}
 	div.blogLandCard-date {font-size: 0.6vmax;}
 
-	p {font-size: 1vmax;}
-	h2 {font-size: 1.314vmax;}
-	h1 {font-size: 1.942vmax;}
+	p {font-size: 0.6vmax;}
+	h2 {font-size: 1vmax;}
+	h1 {font-size: 1.314vmax;}
 
 	main > div.blogContainer {
 		margin-left: 0;
@@ -886,9 +886,9 @@ only screen and (                min-resolution: 2dppx)  and (min-width: 2600px)
 	div.blogLandCard-description {font-size: 0.6vmax;}
 	div.blogLandCard-date {font-size: 0.6vmax;}
 
-	p {font-size: 1vmax;}
-	h2 {font-size: 1.314vmax;}
-	h1 {font-size: 1.942vmax;}
+	p {font-size: 0.6vmax;}
+	h2 {font-size: 1vmax;}
+	h1 {font-size: 1.314vmax;}
 
 	main > div.blogContainer {
 		margin-left: 0;
